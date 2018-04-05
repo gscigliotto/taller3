@@ -24,13 +24,14 @@ public class main {
 	
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-		
-		
-		
+
 		try
 		{
 			IniManager im = new IniManager(ruta);
+			
 			im.Load();
+			
+			System.out.println(im.getSeccion("Startup").getItems().get("AppName"));
 		}catch(FileNotFoundException e){
 			System.out.println(e.getMessage());
 		}
