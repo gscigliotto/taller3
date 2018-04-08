@@ -7,11 +7,16 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-
 import com.gs.archivohandler.IniManager;
+import org.apache.log4j.*;
+
+
+
+
 
 public class main {
 	
@@ -19,40 +24,32 @@ public class main {
 	
 	
 	
-	static String ruta="C:\\trabajo\\file.ini";
+	static String dir_rel="\\setup.ini";
 	
+	final static Logger log = Logger.getLogger(main.class);
 	
 	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
+		//Configuracion de logn4j
+		BasicConfigurator.configure();
+
+		log.info("INICIA EL PROGRAMA");
 
 		try
 		{
-			IniManager im = new IniManager(ruta);
+			//obtengo la ruta desde donde esta ejecutandose la aplicacion.
+			Path Ruta = Paths.get("");
+			
+			//concateno la ruta de la app a el directorio
+			dir_rel=Ruta.toAbsolutePath().toString()+""+dir_rel;
+			IniManager im = new IniManager(dir_rel);
 			
 			im.Load();
+			log.info(im.getSeccion("Startup").getItems().get("AppName"));
 			
-			System.out.println(im.getSeccion("Startup").getItems().get("AppName"));
 		}catch(FileNotFoundException e){
 			System.out.println(e.getMessage());
 		}
-		
-		
-		
-		
-		
-		/*
-		 * try{
-		
-			testEscribir();
-		}catch(IOException e){
-			
-		}
-		*/
-		
-		
-		
-		
-		
+				
 	}
 	
 	
@@ -62,7 +59,7 @@ public class main {
 	public static void testEscribir()throws IOException{
 
 		String msg ="Hola InMundo";
-		BufferedWriter writer = new BufferedWriter(new FileWriter(ruta,true));
+		BufferedWriter writer = new BufferedWriter(new FileWriter(dir_rel,true));
 
 		PrintWriter pw = new PrintWriter(writer);
 		
@@ -89,7 +86,7 @@ public class main {
 
 		FileReader fr=null;
 		try{
-			fr= new FileReader(ruta);
+			fr= new FileReader(dir_rel);
 			BufferedReader br = new BufferedReader(fr);
 			while((linea=br.readLine())!=null){
 				lineas.add(linea);

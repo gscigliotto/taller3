@@ -10,25 +10,25 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+
+import com.gs.archivo.main;
+
+
+
 public class IniManager {
 	private String ruta;
-	private FileReader fr;
+
 	
 	private List<Seccion> secciones;
-	
-	public FileReader getFr() {
-		return fr;
-	}
 
-	public void setFr(FileReader fr) {
-		this.fr = fr;
-	}
+	final static Logger log = Logger.getLogger(main.class);
 
 	public String getRuta() {
 		return ruta;
 	}
 
-	public void setRuta(String ruta) {
+	private void setRuta(String ruta) {
 		this.ruta = ruta;
 	}
 
@@ -44,6 +44,9 @@ public class IniManager {
 		setRuta(paht);
 		File f = new File(this.getRuta());
 		this.secciones=new ArrayList<Seccion>();
+
+		
+		
 		if(!f.exists())
 		{
 			
@@ -66,9 +69,10 @@ public class IniManager {
 	public boolean Load() throws IOException, FileNotFoundException{
 		
 		boolean ret=false;
+		FileReader fr =null;
 		try
 		{
-			FileReader fr = new FileReader(this.getRuta());
+			fr = new FileReader(this.getRuta());
 			BufferedReader br=new BufferedReader(fr);
 			leer(new Scanner(br));
 			
@@ -91,7 +95,7 @@ public class IniManager {
 	
 	private void leer(Scanner sc){
 	String linea;
-	int i=0;
+	
 
 	sc.useDelimiter("\n");
 	
@@ -103,18 +107,23 @@ public class IniManager {
 				Seccion sec= new Seccion(linea.replace("[", "").replaceAll("]", "").replace("\r", ""));
 				
 				secciones.add(sec);
-				System.out.println("seccion: "+linea.replace("[", "").replaceAll("]", ""));
+				log.info("seccion: "+linea.replace("[", "").replaceAll("]", ""));
+				
 				linea=this.getLinea(sc);
 				
 				while(sc.hasNext()&& Seccion.esItem(linea) )
 				{
 					
-					sec.setItem(linea.split("=")[0], linea.split("=")[1]);	
-					System.out.println("propiedad: "+linea.split("=")[0]+" "+linea.split("=")[1]);
-					linea=this.getLinea(sc);
+					sec.setItem(linea.split("=")[0], linea.split("=")[1]);
+					log.info("propiedad: "+linea.split("=")[0]+" "+linea.split("=")[1]);
 					
-					//System.out.println(i);
-					//i++;
+					linea=this.getLinea(sc);
+					if(!sc.hasNext()&&Seccion.esItem(linea)) {
+						sec.setItem(linea.split("=")[0], linea.split("=")[1]);
+						log.info("propiedad: "+linea.split("=")[0]+" "+linea.split("=")[1]);
+
+					}
+
 				}
 				
 			}	
