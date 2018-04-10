@@ -20,6 +20,7 @@ import org.apache.log4j.*;
 
 public class main {
 	
+	
 	static String dir_rel="\\configuraciones\\setup.ini";
 	
 	final static Logger log = Logger.getLogger(main.class);
