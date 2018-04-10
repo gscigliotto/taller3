@@ -20,11 +20,7 @@ import org.apache.log4j.*;
 
 public class main {
 	
-	
-	
-	
-	
-	static String dir_rel="\\setup.ini";
+	static String dir_rel="\\configuraciones\\setup.ini";
 	
 	final static Logger log = Logger.getLogger(main.class);
 	
@@ -36,11 +32,10 @@ public class main {
 
 		try
 		{
-			//obtengo la ruta desde donde esta ejecutandose la aplicacion.
-			Path Ruta = Paths.get("");
 			
-			//concateno la ruta de la app a el directorio
-			dir_rel=Ruta.toAbsolutePath().toString()+""+dir_rel;
+			Path Ruta = Paths.get(""); //obtengo la ruta desde donde esta ejecutandose la aplicacion.
+			
+			dir_rel=Ruta.toAbsolutePath().toString()+""+dir_rel;		//concateno la ruta de la app a el directorio
 			IniManager im = new IniManager(dir_rel);
 			
 			im.Load();
@@ -54,7 +49,7 @@ public class main {
 	
 	
 	
-	
+
 	
 	public static void testEscribir()throws IOException{
 
@@ -115,12 +110,6 @@ public class main {
 		
 		
 	}
-	
-	
-	
-	
-	
-	
 	
 
 }

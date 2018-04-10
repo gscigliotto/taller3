@@ -35,7 +35,7 @@ public class Seccion {
 	
 	public static boolean esItem(String str){
 		boolean ret=false;	
-		if( !str.substring(0, 1).equals("["))
+		if( !str.substring(0, 1).equals("[") && !str.substring(0, 1).equals(";"))
 			return true;
 		
 		
