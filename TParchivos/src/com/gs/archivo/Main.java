@@ -19,33 +19,33 @@ import org.apache.log4j.*;
 
 
 
-public class main {
+public class Main {
 	
 	
 	static String dir_rel="\\configuraciones\\setup.ini";
 	
-	final static Logger log = Logger.getLogger(main.class);
+	final static Logger log = Logger.getLogger(Main.class);
 	
 	public static void main(String[] args) throws Exception {
-		//Configuracion de logn4j
-		BasicConfigurator.configure();
+	//Configuracion de logn4j
+	BasicConfigurator.configure();
 
-		log.info("INICIA EL PROGRAMA");
+	log.info("INICIA EL PROGRAMA");
 
-		try
-		{
-			
-			Path Ruta = Paths.get(""); //obtengo la ruta desde donde esta ejecutandose la aplicacion.
-			
-			dir_rel=Ruta.toAbsolutePath().toString()+""+dir_rel;		//concateno la ruta de la app a el directorio
-			IniManager im = new IniManager(dir_rel);
-			
-			im.Load();
-			log.info(im.getSeccion("Startup").getItems().get("AppName"));
-			
-		}catch(FileNotFoundException e){
-			System.out.println(e.getMessage());
-		}
+	try
+	{
+		
+		Path Ruta = Paths.get(""); //obtengo la ruta desde donde esta ejecutandose la aplicacion.
+		
+		dir_rel=Ruta.toAbsolutePath().toString()+""+dir_rel;		//concateno la ruta de la app a el directorio
+		IniManager im = new IniManager(dir_rel);
+		
+		im.Load();
+		log.info(im.getSeccion("Startup").getItems().get("AppName"));
+		
+	}catch(FileNotFoundException e){
+		System.out.println(e.getMessage());
+	}
 				
 	}
 	

@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
-import com.gs.archivo.main;
+import com.gs.archivo.Main;
 
 
 
@@ -22,7 +22,7 @@ public class IniManager {
 	
 	private List<Seccion> secciones;
 
-	final static Logger log = Logger.getLogger(main.class);
+	final static Logger log = Logger.getLogger(Main.class);
 
 	public String getRuta() {
 		return ruta;
