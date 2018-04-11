@@ -25,20 +25,17 @@ public class Main {
 		BasicConfigurator.configure();
 		log.info("INICIA EL PROGRAMA");
 
-
 		// log.setLevel(args[0]);
 		Path Ruta = Paths.get(""); // obtengo la ruta desde donde esta ejecutandose la aplicacion.
 
 		dir_rel = Ruta.toAbsolutePath().toString() + "" + dir_rel; // concateno directorio
 		IniManager im = new IniManager(dir_rel);
 
-
 		try {
 
 			im.Load();
 			log.info(im.getSeccion("Startup").getItems().get("AppName"));
 
-			
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
 		}
