@@ -175,6 +175,7 @@ public class IniManager {
 	public void list(){
 		
 	}
+
 	public void setItem(String sec, String clave,String Valor){
 	}
 	
