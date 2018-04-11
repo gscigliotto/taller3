@@ -14,52 +14,45 @@ import java.util.List;
 import com.gs.archivohandler.IniManager;
 import org.apache.log4j.*;
 
-
-
-
-
-
 public class Main {
-	
-	
-	static String dir_rel="\\configuraciones\\setup.ini";
-	
+
+	static String dir_rel = "\\configuraciones\\setup.ini";
+
 	final static Logger log = Logger.getLogger(Main.class);
-	
+
 	public static void main(String[] args) throws Exception {
-	//Configuración de logn4j
-	BasicConfigurator.configure();
+		// Configuración de logn4j
+		BasicConfigurator.configure();
+		
+//		log.setLevel(args[0]);
 
-	log.info("INICIA EL PROGRAMA");
+		log.info("INICIA EL PROGRAMA");
 
-	try
-	{
-		
-		Path Ruta = Paths.get(""); //obtengo la ruta desde donde esta ejecutandose la aplicacion.
-		
-		dir_rel=Ruta.toAbsolutePath().toString()+""+dir_rel;		//concateno la ruta de la app a el directorio
-		IniManager im = new IniManager(dir_rel);
-		
-		im.Load();
-		log.info(im.getSeccion("Startup").getItems().get("AppName"));
-		
-	}catch(FileNotFoundException e){
-		System.out.println(e.getMessage());
+		try {
+
+			Path Ruta = Paths.get(""); // obtengo la ruta desde donde esta
+										// ejecutandose la aplicacion.
+
+			dir_rel = Ruta.toAbsolutePath().toString() + "" + dir_rel; // concateno
+																		// la
+													// directorio
+			IniManager im = new IniManager(dir_rel);
+
+			im.Load();
+			log.info(im.getSeccion("Startup").getItems().get("AppName"));
+
+		} catch (FileNotFoundException e) {
+			System.out.println(e.getMessage());
+		}
 	}
-				
-	}
-	
-	
-	
 
-	
-	public static void testEscribir()throws IOException{
+	public static void testEscribir() throws IOException {
 
-		String msg ="Hola InMundo";
-		BufferedWriter writer = new BufferedWriter(new FileWriter(dir_rel,true));
+		String msg = "Hola InMundo";
+		BufferedWriter writer = new BufferedWriter(new FileWriter(dir_rel, true));
 
 		PrintWriter pw = new PrintWriter(writer);
-		
+
 		pw.println(msg);
 
 		pw.close();
@@ -67,51 +60,44 @@ public class Main {
 		writer.close();
 	}
 
-
-	
-	
-	public static void LeerArchivoScanner(){
+	public static void LeerArchivoScanner() {
 		FileReader fr;
 		/*
-		Scanner sc = new Scanner()
-		*/
+		 * Scanner sc = new Scanner()
+		 */
 	}
-	
-	public static void LeerArchivoBr(){
+
+	public static void LeerArchivoBr() {
 		String linea;
 		List<String> lineas = new ArrayList<>();
 
-		FileReader fr=null;
-		try{
-			fr= new FileReader(dir_rel);
+		FileReader fr = null;
+		try {
+			fr = new FileReader(dir_rel);
 			BufferedReader br = new BufferedReader(fr);
-			while((linea=br.readLine())!=null){
+			while ((linea = br.readLine()) != null) {
 				lineas.add(linea);
-				
+
 			}
-			for(String lin:lineas){
+			for (String lin : lineas) {
 				System.out.println(lin);
 			}
-			
-		}catch(Exception e)
-		{
-			throw new RuntimeException("Fallo al leer archivo: "+e.getMessage());
-			
-		}finally
-		{
-			if(fr!=null){
-				try{
+
+		} catch (Exception e) {
+			throw new RuntimeException("Fallo al leer archivo: " + e.getMessage());
+
+		} finally {
+			if (fr != null) {
+				try {
 					fr.close();
-				}catch(Exception e){
-					throw new RuntimeException("Fallo al cerrar el archvio: "+e.getMessage());
+				} catch (Exception e) {
+					throw new RuntimeException("Fallo al cerrar el archvio: " + e.getMessage());
 				}
-				
+
 			}
-			
+
 		}
-		
-		
+
 	}
-	
 
 }
