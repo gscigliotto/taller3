@@ -23,23 +23,25 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		// Configuración de logn4j
 		BasicConfigurator.configure();
-
 		log.info("INICIA EL PROGRAMA");
 
+
+		// log.setLevel(args[0]);
+		Path Ruta = Paths.get(""); // obtengo la ruta desde donde esta ejecutandose la aplicacion.
+
+		dir_rel = Ruta.toAbsolutePath().toString() + "" + dir_rel; // concateno directorio
+		IniManager im = new IniManager(dir_rel);
+
+
 		try {
-
-			Path Ruta = Paths.get(""); // obtengo la ruta desde donde esta ejecutandose la aplicacion.
-
-			dir_rel = Ruta.toAbsolutePath().toString() + "" + dir_rel; // concateno la ruta de la app a el directorio
-			IniManager im = new IniManager(dir_rel);
 
 			im.Load();
 			log.info(im.getSeccion("Startup").getItems().get("AppName"));
 
+			
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
 		}
-
 	}
 
 	public static void testEscribir() throws IOException {
