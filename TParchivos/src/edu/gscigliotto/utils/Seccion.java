@@ -1,4 +1,4 @@
-package com.gs.archivohandler;
+package edu.gscigliotto.utils;
 
 import java.io.BufferedWriter;
 import java.util.HashMap;
