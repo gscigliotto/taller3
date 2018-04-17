@@ -1,4 +1,4 @@
-package edu.gscigliotto.utils;
+package edu.gscigliotto.conf.inifiles;
 
 import java.io.BufferedWriter;
 import java.util.HashMap;

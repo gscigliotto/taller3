@@ -14,8 +14,8 @@ import java.util.List;
 
 import org.apache.log4j.*;
 
-import edu.gscigliotto.utils.IniManager;
-import edu.gscigliotto.utils.Seccion;
+import edu.gscigliotto.conf.inifiles.IniManager;
+import edu.gscigliotto.conf.inifiles.Seccion;
 
 public class main {
 
