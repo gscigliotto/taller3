@@ -40,7 +40,7 @@ public class main {
 			Seccion s= im.getSeccion("Startup");
 			log.info(s.getItems().get("AppName"));
 
-			s.setItem("clave nuevo", "valornuevo");
+			s.setItem("clave nuevooo", "valornuevo");
 			im.save();
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());

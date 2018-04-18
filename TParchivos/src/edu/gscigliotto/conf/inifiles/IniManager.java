@@ -14,12 +14,13 @@ import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
-
 import com.gs.archivo.main;
 
-public class IniManager {
+public class IniManager implements TextReader, TextWriter {
 	private String ruta;
-
+	FileReader fr = null;
+	Scanner sc = null;
+	BufferedReader br;
 	private List<Seccion> secciones;
 
 	public List<Seccion> getSecciones() {
@@ -48,6 +49,11 @@ public class IniManager {
 
 		setRuta(paht);
 		File f = new File(this.getRuta());
+		fr = new FileReader(this.getRuta());
+		br = new BufferedReader(fr);
+
+		sc = new Scanner(br);
+
 		this.secciones = new ArrayList<Seccion>();
 
 		if (!f.exists()) {
@@ -65,17 +71,41 @@ public class IniManager {
 
 	}
 
+	public boolean isReady() {
+		boolean ret = false;
+		if (fr != null) {
+			ret = true;
+		}
+		return ret;
+	}
+
+	public String readLine() {
+		String linea = "";
+
+		if (!this.isReady()) {
+			try {
+
+				linea = this.getLinea(sc);
+
+			} catch (Exception e) {
+				log.error(e.getMessage() + " sefue");
+			}
+
+		} else {
+			linea = this.getLinea(sc);
+
+		}
+		return linea;
+	}
+
 	public boolean load() throws IOException, FileNotFoundException {
 
 		boolean ret = false;
-		FileReader fr = null;
+
 		try {
-			fr = new FileReader(this.getRuta());
-			BufferedReader br = new BufferedReader(fr);
+
 			leer(new Scanner(br));
 
-		} catch (FileNotFoundException e) {
-			throw e;
 		} finally {
 			if (fr != null) {
 				fr.close();
@@ -85,46 +115,74 @@ public class IniManager {
 		return ret;
 
 	}
+	/*
+	 * private void leer(Scanner sc) { String linea;
+	 * 
+	 * sc.useDelimiter("\n");
+	 * 
+	 * while (sc.hasNext()) { linea = this.getLinea(sc);
+	 * 
+	 * while (sc.hasNext() && Seccion.esSeccion(linea)) { Seccion sec = new
+	 * Seccion(linea.replace("[", "").replaceAll("]", "").replace("\r", ""));
+	 * 
+	 * secciones.add(sec); // log.info("seccion: " + linea.replace("[",
+	 * "").replaceAll("]", // ""));
+	 * 
+	 * linea = this.getLinea(sc);
+	 * 
+	 * while (sc.hasNext() && Seccion.esItem(linea)) {
+	 * 
+	 * sec.setItem(linea.split("=")[0], linea.split("=")[1]); // log.info(
+	 * "propiedad: " + linea.split("=")[0] + " " + // linea.split("=")[1]);
+	 * 
+	 * linea = this.getLinea(sc); if (!sc.hasNext() && Seccion.esItem(linea)) {
+	 * sec.setItem(linea.split("=")[0], linea.split("=")[1]); // log.info(
+	 * "propiedad: " + linea.split("=")[0] + " " + // linea.split("=")[1]);
+	 * 
+	 * }
+	 * 
+	 * }
+	 * 
+	 * }
+	 * 
+	 * }
+	 * 
+	 * }
+	 */
 
 	private void leer(Scanner sc) {
-		String linea;
+		String linea = this.readLine();
 
-		sc.useDelimiter("\n");
+		while (linea != "" && Seccion.esSeccion(linea)) {
+			Seccion sec = new Seccion(linea.replace("[", "").replaceAll("]", "").replace("\r", ""));
+			// log.info(linea+" 1");
+			secciones.add(sec);
 
-		while (sc.hasNext()) {
-			linea = this.getLinea(sc);
+			linea = this.readLine();
+			// log.info(linea+" 1");
+			while (linea != "" && Seccion.esItem(linea)) {
+				// log.info(linea+" 1");
+				sec.setItem(linea.split("=")[0], linea.split("=")[1]);
 
-			while (sc.hasNext() && Seccion.esSeccion(linea)) {
-				Seccion sec = new Seccion(linea.replace("[", "").replaceAll("]", "").replace("\r", ""));
+				linea = this.readLine();
+				// if (linea!="" && Seccion.esItem(linea)) {
+				/// sec.setItem(linea.split("=")[0], linea.split("=")[1]);
+				// log.info("propiedad: " + linea.split("=")[0] + " " +
+				// linea.split("=")[1]);
 
-				secciones.add(sec);
-				log.info("seccion: " + linea.replace("[", "").replaceAll("]", ""));
-
-				linea = this.getLinea(sc);
-
-				while (sc.hasNext() && Seccion.esItem(linea)) {
-
-					sec.setItem(linea.split("=")[0], linea.split("=")[1]);
-					log.info("propiedad: " + linea.split("=")[0] + " " + linea.split("=")[1]);
-
-					linea = this.getLinea(sc);
-					if (!sc.hasNext() && Seccion.esItem(linea)) {
-						sec.setItem(linea.split("=")[0], linea.split("=")[1]);
-						log.info("propiedad: " + linea.split("=")[0] + " " + linea.split("=")[1]);
-
-					}
-
-				}
+				// }
 
 			}
 
-			// linea=this.getLinea(sc);
 		}
 
 	}
 
 	private String getLinea(Scanner sc) {
-		return sc.next();
+		String ret = "";
+		if (sc.hasNext())
+			ret = sc.nextLine();
+		return ret;
 
 	}
 
@@ -167,14 +225,14 @@ public class IniManager {
 			Seccion se = null;
 			while (it.hasNext()) {
 				se = (Seccion) it.next();
-				bw.write("["+se.getNombre()+"]");
+				bw.write("[" + se.getNombre() + "]");
 				bw.newLine();
 				Iterator<String> itkeys = se.getItems().keySet().iterator();
 
 				while (itkeys.hasNext()) {
 					String key;
-					key=(String) itkeys.next();
-					bw.write(key+"=" +se.getItems().get(key));
+					key = (String) itkeys.next();
+					bw.write(key + "=" + se.getItems().get(key));
 					bw.newLine();
 				}
 			}
@@ -183,5 +241,17 @@ public class IniManager {
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
+	}
+
+	@Override
+	public String writeLine() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+
 	}
 }
