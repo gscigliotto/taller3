@@ -1,7 +1,10 @@
 package edu.gscigliotto.conf.inifiles;
 
 import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class Seccion {
 	private String nombre;
@@ -42,8 +45,7 @@ public class Seccion {
 	}
 
 	public static boolean esComentario(String str) {
-		boolean ret = false;
-		return ret;
+		return str.substring(0, 1).equals(";");
 	}
 
 	public void setItem(String str) {
@@ -56,7 +58,34 @@ public class Seccion {
 	public void list() {
 	}
 
-	public void save(BufferedWriter bw) {
+	public void save(FileWriter fw) {
+		
+		try {
+			fw.write("["+this.getNombre()+"]"+System.lineSeparator());
+			
+			Iterator<String> itkeys = this.getItems().keySet().iterator();
+			while (itkeys.hasNext()) {
+					String key;
+					key = (String) itkeys.next();
+					fw.write(key + "=" + this.getItems().get(key)+System.lineSeparator());
+					
+				}
+
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//	bw.write("[" + se.getNombre() + "]");
+		//	bw.newLine();
+		//	Iterator<String> itkeys = se.getItems().keySet().iterator();
+
+		//	while (itkeys.hasNext()) {
+		//		String key;
+		//		key = (String) itkeys.next();
+		//		bw.write(key + "=" + se.getItems().get(key));
+		//		bw.newLine();
+		//	}
 	}
 
 	public String getNombre() {

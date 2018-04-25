@@ -1,4 +1,4 @@
-package edu.gscigliotto.conf.inifiles;
+package tp1.utils.textfiles;
 
 public interface TextReader {
 	

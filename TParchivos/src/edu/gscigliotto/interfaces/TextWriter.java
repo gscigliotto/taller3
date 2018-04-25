@@ -1,4 +1,4 @@
-package edu.gscigliotto.conf.inifiles;
+package edu.gscigliotto.interfaces;
 
 public interface TextWriter {
 

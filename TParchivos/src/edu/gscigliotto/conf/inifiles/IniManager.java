@@ -16,6 +16,9 @@ import org.apache.log4j.Logger;
 
 import com.gs.archivo.main;
 
+import edu.gscigliotto.interfaces.TextReader;
+import edu.gscigliotto.interfaces.TextWriter;
+
 public class IniManager implements TextReader, TextWriter {
 	private String ruta;
 	FileReader fr = null;
@@ -115,62 +118,20 @@ public class IniManager implements TextReader, TextWriter {
 		return ret;
 
 	}
-	/*
-	 * private void leer(Scanner sc) { String linea;
-	 * 
-	 * sc.useDelimiter("\n");
-	 * 
-	 * while (sc.hasNext()) { linea = this.getLinea(sc);
-	 * 
-	 * while (sc.hasNext() && Seccion.esSeccion(linea)) { Seccion sec = new
-	 * Seccion(linea.replace("[", "").replaceAll("]", "").replace("\r", ""));
-	 * 
-	 * secciones.add(sec); // log.info("seccion: " + linea.replace("[",
-	 * "").replaceAll("]", // ""));
-	 * 
-	 * linea = this.getLinea(sc);
-	 * 
-	 * while (sc.hasNext() && Seccion.esItem(linea)) {
-	 * 
-	 * sec.setItem(linea.split("=")[0], linea.split("=")[1]); // log.info(
-	 * "propiedad: " + linea.split("=")[0] + " " + // linea.split("=")[1]);
-	 * 
-	 * linea = this.getLinea(sc); if (!sc.hasNext() && Seccion.esItem(linea)) {
-	 * sec.setItem(linea.split("=")[0], linea.split("=")[1]); // log.info(
-	 * "propiedad: " + linea.split("=")[0] + " " + // linea.split("=")[1]);
-	 * 
-	 * }
-	 * 
-	 * }
-	 * 
-	 * }
-	 * 
-	 * }
-	 * 
-	 * }
-	 */
 
 	private void leer(Scanner sc) {
 		String linea = this.readLine();
-
 		while (linea != "" && Seccion.esSeccion(linea)) {
 			Seccion sec = new Seccion(linea.replace("[", "").replaceAll("]", "").replace("\r", ""));
-			// log.info(linea+" 1");
 			secciones.add(sec);
 
 			linea = this.readLine();
-			// log.info(linea+" 1");
 			while (linea != "" && Seccion.esItem(linea)) {
-				// log.info(linea+" 1");
 				sec.setItem(linea.split("=")[0], linea.split("=")[1]);
-
 				linea = this.readLine();
-				// if (linea!="" && Seccion.esItem(linea)) {
-				/// sec.setItem(linea.split("=")[0], linea.split("=")[1]);
-				// log.info("propiedad: " + linea.split("=")[0] + " " +
-				// linea.split("=")[1]);
 
-				// }
+
+
 
 			}
 
@@ -220,23 +181,25 @@ public class IniManager implements TextReader, TextWriter {
 
 	public void save() {
 		try (FileWriter filew = new FileWriter(this.getRuta())) {
-			BufferedWriter bw = new BufferedWriter(filew);
+			//BufferedWriter bw = new BufferedWriter(filew);
 			Iterator<Seccion> it = this.getSecciones().iterator();
 			Seccion se = null;
 			while (it.hasNext()) {
 				se = (Seccion) it.next();
-				bw.write("[" + se.getNombre() + "]");
-				bw.newLine();
-				Iterator<String> itkeys = se.getItems().keySet().iterator();
+				se.save(filew);
+			//	bw.write("[" + se.getNombre() + "]");
+			//	bw.newLine();
+			//	Iterator<String> itkeys = se.getItems().keySet().iterator();
 
-				while (itkeys.hasNext()) {
-					String key;
-					key = (String) itkeys.next();
-					bw.write(key + "=" + se.getItems().get(key));
-					bw.newLine();
-				}
+			//	while (itkeys.hasNext()) {
+			//		String key;
+			//		key = (String) itkeys.next();
+			//		bw.write(key + "=" + se.getItems().get(key));
+			//		bw.newLine();
+			//	}
 			}
-			bw.close();
+			//bw.close();
+
 
 		} catch (Exception e) {
 			log.error(e.getMessage());
