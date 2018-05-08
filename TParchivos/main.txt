@@ -66,12 +66,6 @@ public class main {
 
 		br.close();
 		bw.close();
-		
-		
-		
-		/*
-		 * FIN EJERCICIO 1
-		 */
 
 		// log.setLevel(args[0]);
 

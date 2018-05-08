@@ -2,6 +2,8 @@ package tp1.utils.textfiles;
 
 public interface TextWriter {
 
-	public String writeLine();
+
 	public void close();
+	public boolean isReady();
+	void writeLine(String txt);
 }
