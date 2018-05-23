@@ -163,6 +163,8 @@ public class IniManager implements TextReader, TextWriter {
 				encontre = true;
 
 		}
+		
+		if(!encontre) throw new RuntimeException();
 
 		return sc;
 

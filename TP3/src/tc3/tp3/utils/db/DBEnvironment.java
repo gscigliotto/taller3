@@ -3,17 +3,18 @@ package tc3.tp3.utils.db;
 public class DBEnvironment {
 
 	private static final String CONN_STRING_TEMPLATE="jdbc:%s://%s:%s;database=%s;user=%s;password=%s";
-	private static final String K_PASSWORD="password";
-	private static final String K_USERNAME="username";
-	private static final String K_DATABASE="database";
-	private static final String K_PORT="port";
-	private static final String K_SERVER="server";
-	private static final String K_DRIVER="driver";
-	private static final String K_ENVIRONMENTNAME="environmentName";
 	private static final String ERR_INVALID_ATTRIBUTE="Nombre del Atributo invalido";
 	private static final String ERR_INVALID_ATT_VALUE="Valor Invalido para el atributo %s ('%s')";
 	private static final String UNDEFINED="[UNDEFINED]";
 	
+	public static final String K_PASSWORD="password";
+	public static final String K_USERNAME="username";
+	public static final String K_DATABASE="database";
+	public static final String K_PORT="port";
+	public static final String K_SERVER="server";
+	public static final String K_DRIVER="driver";
+	public static final String K_ENVIRONMENTNAME="environmentName";
+
 	
 	
 	
