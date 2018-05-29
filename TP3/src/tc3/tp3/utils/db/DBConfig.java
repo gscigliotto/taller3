@@ -17,9 +17,10 @@ public class DBConfig {
 		this.defaultEnvironment = defaultEnvironment;
 	}
 	public DBConfig() {
+		this().DBConfig("","");
 		
 	}
-	public DBConfig(String defaultEnvironment) {
+	public  DBConfig(String folder, String filename) {
 		this.defaultEnvironment = defaultEnvironment;
 	}
 	
