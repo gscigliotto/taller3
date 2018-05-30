@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -34,7 +35,7 @@ public class IniManager implements TextReader, TextWriter {
 		this.secciones = secciones;
 	}
 
-	final static Logger log = Logger.getLogger(main.class);
+	//final static Logger log = Logger.getLogger(main.class);
 
 	public String getRuta() {
 		return ruta;
@@ -44,27 +45,34 @@ public class IniManager implements TextReader, TextWriter {
 		this.ruta = ruta;
 	}
 
-	IniManager() {
-
+	public IniManager() {
+		File f = new File(Paths.get("").toString()+"\\DBConfig.ini");
+		try {
+			f.createNewFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public IniManager(String paht) throws FileNotFoundException {
 
 		setRuta(paht);
-		File f = new File(this.getRuta());
-		fr = new FileReader(this.getRuta());
-		br = new BufferedReader(fr);
+		File f = new File(paht);
 
-		sc = new Scanner(br);
+		
 
-		this.secciones = new ArrayList<Seccion>();
 
 		if (!f.exists()) {
 
 			throw new FileNotFoundException();
 
 		}
+		this.secciones = new ArrayList<Seccion>();
+		fr = new FileReader(this.getRuta());
+		br = new BufferedReader(fr);
 
+		sc = new Scanner(br);
 	}
 
 	public boolean load(String paht) {
@@ -91,7 +99,7 @@ public class IniManager implements TextReader, TextWriter {
 				linea = this.getLinea(sc);
 
 			} catch (Exception e) {
-				log.error(e.getMessage() + " sefue");
+				//log.error(e.getMessage() + " sefue");
 			}
 
 		} else {
@@ -204,7 +212,7 @@ public class IniManager implements TextReader, TextWriter {
 
 
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			//log.error(e.getMessage());
 		}
 	}
 
