@@ -1,8 +1,13 @@
 package tc3.tp3.utils.db;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import edu.gscigliotto.conf.inifiles.IniManager;
+import edu.gscigliotto.conf.inifiles.Seccion;
 import tc3.tp3.utils.ini.IniPersistent;
 
 public class DBConfig {
@@ -17,10 +22,24 @@ public class DBConfig {
 		this.defaultEnvironment = defaultEnvironment;
 	}
 	public DBConfig() {
-		
+	
 	}
-	public DBConfig(String defaultEnvironment) {
-		this.defaultEnvironment = defaultEnvironment;
+	public DBConfig(String folder, String filename) {
+		
+		try {
+			im = new IniManager(folder+"\\"+filename);
+			
+		} catch (FileNotFoundException e) {
+
+		}
+		try {
+			im.load();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Seccion s= im.getSeccion(this.ROOT_SECTION);
+		
 	}
 	
 	public void setDefaultEnvieronment(String environmentName)throws RuntimeException {
