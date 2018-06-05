@@ -2,6 +2,7 @@ package edu.cerveapp.model;
 
 import java.util.List;
 
+
 public class Cerveceria {
 	public List<Usuario> getUsuarios() {
 		return usuarios;
