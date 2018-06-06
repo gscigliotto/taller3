@@ -4,6 +4,16 @@ import java.util.List;
 
 
 public class Cerveceria {
+	private List<GustoProduccion> gustos;
+	private List<Usuario> usuarios;
+	private List<Sucursal> sucursales;
+	private List<Pedido> pedido;
+	
+	
+	public void GenerarPedido(Pedido p)
+	{
+		
+	}
 	public List<Usuario> getUsuarios() {
 		return usuarios;
 	}
@@ -22,10 +32,13 @@ public class Cerveceria {
 	public void setSucursales(List<Sucursal> sucursales) {
 		this.sucursales = sucursales;
 	}
+	public List<Pedido> getPedido() {
+		return pedido;
+	}
+	public void setPedido(List<Pedido> pedido) {
+		this.pedido = pedido;
+	}
 
-	private List<GustoProduccion> gustos;
-	private List<Usuario> usuarios;
-	private List<Sucursal> sucursales;
 	
 	
 }

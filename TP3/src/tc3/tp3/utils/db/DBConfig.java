@@ -17,6 +17,7 @@ public class DBConfig {
 	static final String ERR_DEFAULT_ENVIRONMENT="Error: ambiente inexistente";
 	private String defaultEnvironment;
 	private IniManager im;
+	private DBEnvironment dben;
 
 	public void setDefaultEnvironment(String defaultEnvironment) {
 		this.defaultEnvironment = defaultEnvironment;
@@ -28,17 +29,19 @@ public class DBConfig {
 		
 		try {
 			im = new IniManager(folder+"\\"+filename);
+		
 			
 		} catch (FileNotFoundException e) {
 
 		}
 		try {
 			im.load();
+			Seccion s= im.getSeccion(this.ROOT_SECTION);
+			dben = new DBEnvironment(s.getItems().get("environment"),s.getItems().get("driver"),s.getItems().get("server"),s.getItems().get("port"),s.getItems().get("database"),s.getItems().get("username"),s.getItems().get("password")); 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Seccion s= im.getSeccion(this.ROOT_SECTION);
 		
 	}
 	
@@ -60,12 +63,12 @@ public class DBConfig {
 	}
 	public String getURL()
 	{
-		return null;
+		return dben.getURL();
 		
 	}
 	public String getURL(String environmentName)throws RuntimeException
 	{
-		return null;
+		return dben.getURL();
 		
 	}
 	public boolean hasEnvironment(String environmentName) {
