@@ -1,15 +1,22 @@
-package edu.cerveapp.model;
+package entities;
 
 import java.util.List;
 
 
 public class Cerveceria {
+
+	private String nombreCerveceria;
 	private List<GustoProduccion> gustos;
 	private List<Usuario> usuarios;
 	private List<Sucursal> sucursales;
 	private List<Pedido> pedido;
 	
-	
+	public String getNombreCerveceria() {
+		return nombreCerveceria;
+	}
+	public void setNombreCerveceria(String nombreCerveceria) {
+		this.nombreCerveceria = nombreCerveceria;
+	}
 	public void GenerarPedido(Pedido p)
 	{
 		

@@ -1,4 +1,4 @@
-package edu.cerveapp.model;
+package entities;
 
 import java.util.List;
 

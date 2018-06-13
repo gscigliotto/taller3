@@ -1,4 +1,4 @@
-package edu.cerveapp.model;
+package entities;
 
 import java.util.List;
 
@@ -30,6 +30,19 @@ public class Pedido {
 	private Usuario usuario;
 	private List<Gusto> gustosPedido;
 	private double monto;
+	public List<Gusto> getGustosPedido() {
+		return gustosPedido;
+	}
+	public void setGustosPedido(List<Gusto> gustosPedido) {
+		this.gustosPedido = gustosPedido;
+	}
+	public int getNumero() {
+		return numero;
+	}
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
+	private int numero;
 	
 	private ePedido estadoPedido;
 

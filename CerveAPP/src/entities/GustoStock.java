@@ -1,4 +1,4 @@
-package edu.cerveapp.model;
+package entities;
 
 public class GustoStock extends Gusto{
 	private double variedadDisp;

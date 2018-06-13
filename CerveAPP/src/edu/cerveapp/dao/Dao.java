@@ -1,5 +1,5 @@
 package edu.cerveapp.dao;
 
-public class Admin {
+public class Dao {
 
 }
