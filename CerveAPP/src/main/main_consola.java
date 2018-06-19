@@ -73,7 +73,6 @@ public class main_consola {
 			List<Pedido> pedidos = negocio.ObtenerPedidos();
 			Iterator<Pedido> it= pedidos.iterator();
 			
-	
 			System.out.println("****************************************************");
 			while(it.hasNext())
 			{
