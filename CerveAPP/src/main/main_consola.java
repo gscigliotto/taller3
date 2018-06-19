@@ -63,19 +63,41 @@ public class main_consola {
 	}
 
 	private static void listar_pedidos(Negocio negocio){
-		List<Pedido> pedidos = negocio.ObtenerPedidos();
-		Iterator<Pedido> it= pedidos.iterator();
+		Scanner s = new Scanner(System.in);
+		String op="";
+		boolean encontre=false;
 		
-
-		System.out.println("****************************************************");
-		while(it.hasNext())
+		
+		while(op!="exit")
 		{
-			Pedido p=(Pedido) it.next();
-			System.out.println("Pedido N: "+p.getNumero());
-		}
-		System.out.println("****************************************************");
-		System.out.println("****************************************************");
-		System.out.println("Para Ver un pedido ingrese el numero, Para salir escriba 'exit'");
+			List<Pedido> pedidos = negocio.ObtenerPedidos();
+			Iterator<Pedido> it= pedidos.iterator();
+			
+	
+			System.out.println("****************************************************");
+			while(it.hasNext())
+			{
+				Pedido p=(Pedido) it.next();
+				System.out.println("Pedido N: "+p.getNumero());
+			}
+			System.out.println("****************************************************");
+			System.out.println("****************************************************");
+			System.out.println("Para Ver un pedido ingrese el numero, Para salir escriba 'exit'");
+			op = s.nextLine();
+			if(op!="exit")
+			{
+				it= pedidos.iterator();
+				while(it.hasNext()&&!encontre)
+				{
+					Pedido p=(Pedido) it.next();
+					if(String.valueOf(p.getNumero()).equals(op)) {
+						encontre=true;
+						//verpedido
+					}
+				}
+				
+			}
+		}	
 		
 	}
 	private static String MostrarMenu(String usuario) {
