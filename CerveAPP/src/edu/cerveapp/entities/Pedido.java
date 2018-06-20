@@ -1,18 +1,22 @@
-package entities;
+package edu.cerveapp.entities;
 
 import java.util.List;
 
 public class Pedido {
+	
+	private Usuario usuario;
+	private List<GustoPedido> gustosPedido;
+	private double monto;
 	public Usuario getUsuario() {
 		return usuario;
 	}
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	public List<Gusto> getGustos() {
+	public List<GustoPedido> getGustos() {
 		return gustosPedido;
 	}
-	public void setGustos(List<Gusto> gustos) {
+	public void setGustos(List<GustoPedido> gustos) {
 		this.gustosPedido = gustos;
 	}
 	public double getMonto() {
@@ -27,13 +31,11 @@ public class Pedido {
 	public void setEstadoPedido(ePedido estadoPedido) {
 		this.estadoPedido = estadoPedido;
 	}
-	private Usuario usuario;
-	private List<Gusto> gustosPedido;
-	private double monto;
-	public List<Gusto> getGustosPedido() {
+
+	public List<GustoPedido> getGustosPedido() {
 		return gustosPedido;
 	}
-	public void setGustosPedido(List<Gusto> gustosPedido) {
+	public void setGustosPedido(List<GustoPedido> gustosPedido) {
 		this.gustosPedido = gustosPedido;
 	}
 	public int getNumero() {

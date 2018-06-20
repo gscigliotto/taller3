@@ -2,8 +2,8 @@
 <class-diagram version="1.1.14" icons="true" automaticImage="PNG" always-add-relationships="false" 
   generalizations="true" realizations="true" associations="true" dependencies="false" nesting-relationships="true" 
   router="FAN">  
-  <class id="1" language="java" name="entities.Cerveceria" project="CerveAPP" 
-    file="/CerveAPP/Entidades/entities/Cerveceria.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="1" language="java" name="edu.cerveapp.entities.Cerveceria" project="CerveAPP" 
+    file="/CerveAPP/src/edu/cerveapp/entities/Cerveceria.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="192" y="117"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -11,8 +11,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="entities.Usuario" project="CerveAPP" 
-    file="/CerveAPP/Entidades/entities/Usuario.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="2" language="java" name="edu.cerveapp.entities.Usuario" project="CerveAPP" 
+    file="/CerveAPP/src/edu/cerveapp/entities/Usuario.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="388" width="244" x="34" y="336"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -20,8 +20,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="entities.Pedido" project="CerveAPP" 
-    file="/CerveAPP/Entidades/entities/Pedido.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="3" language="java" name="edu.cerveapp.entities.Pedido" project="CerveAPP" 
+    file="/CerveAPP/src/edu/cerveapp/entities/Pedido.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="548" y="567"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -29,8 +29,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="entities.Gusto" project="CerveAPP" file="/CerveAPP/Entidades/entities/Gusto.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
+  <class id="4" language="java" name="edu.cerveapp.entities.Gusto" project="CerveAPP" 
+    file="/CerveAPP/src/edu/cerveapp/entities/Gusto.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="841" y="67"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -38,8 +38,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="entities.Sucursal" project="CerveAPP" 
-    file="/CerveAPP/Entidades/entities/Sucursal.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="5" language="java" name="edu.cerveapp.entities.Sucursal" project="CerveAPP" 
+    file="/CerveAPP/src/edu/cerveapp/entities/Sucursal.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="544" y="308"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -47,8 +47,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="entities.GustoStock" project="CerveAPP" 
-    file="/CerveAPP/Entidades/entities/GustoStock.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="6" language="java" name="edu.cerveapp.entities.GustoStock" project="CerveAPP" 
+    file="/CerveAPP/src/edu/cerveapp/entities/GustoStock.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="994" y="454"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -56,8 +56,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="entities.GustoProduccion" project="CerveAPP" 
-    file="/CerveAPP/Entidades/entities/GustoProduccion.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="7" language="java" name="edu.cerveapp.entities.GustoProduccion" project="CerveAPP" 
+    file="/CerveAPP/src/edu/cerveapp/entities/GustoProduccion.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="563" y="101"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -66,59 +66,59 @@
     </display>  
   </class>  
   <association id="8">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="9" name="sucursales">        
-        <position height="18" width="62" x="346" y="183"/>      
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="9" name="usuario">        
+        <position height="0" width="0" x="-293" y="-1138"/>      
       </attribute>      
-      <multiplicity id="10" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="394" y="-362"/>      
+      <multiplicity id="10" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-293" y="-1138"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
+    <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="11">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
-  <generalization id="12">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
-  <association id="13">    
+  <association id="11">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="14" name="gustosPedido">        
+      <attribute id="12" name="gustosPedido">        
         <position height="0" width="0" x="1" y="-50"/>      
       </attribute>      
-      <multiplicity id="15" minimum="0" maximum="2147483647">        
+      <multiplicity id="13" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="1" y="-50"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <generalization id="14">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <generalization id="15">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
   <association id="16">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="17" name="gustos">        
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="17" name="gustoStock">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
       <multiplicity id="18" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
+    <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="19">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="20" name="pedidos">        
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="20" name="gustos">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
       <multiplicity id="21" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
+    <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="22">    
@@ -134,27 +134,27 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="25">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="26" name="usuario">        
-        <position height="0" width="0" x="-293" y="-1138"/>      
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="26" name="pedidos">        
+        <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="27" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-293" y="-1138"/>      
+      <multiplicity id="27" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
+    <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="28">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="29" name="gustoStock">        
-        <position height="0" width="0" x="0" y="0"/>      
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="29" name="sucursales">        
+        <position height="18" width="62" x="346" y="183"/>      
       </attribute>      
       <multiplicity id="30" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
+        <position height="0" width="0" x="394" y="-362"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
+    <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
