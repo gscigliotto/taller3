@@ -33,7 +33,6 @@ public class Negocio {
 		
 	}
 	public Usuario login() throws UsuarioInvalidoException{
-		
 		Usuario u = this.view.loginUsuario();
 		IRepoUsuarios repoUsuario=(IRepoUsuarios) this.repo.createUsuarioRepo();
 		Usuario guardado=repoUsuario.getByID("",u.getDni() );
