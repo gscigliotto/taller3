@@ -6,12 +6,16 @@ import java.util.Scanner;
 
 import edu.cerveapp.business.Negocio;
 import edu.cerveapp.entities.GustoPedido;
+import edu.cerveapp.entities.IviewCerveApp;
 import edu.cerveapp.entities.Pedido;
+import edu.cerveapp.entities.Usuario;
 import edu.cerveapp.entities.UsuarioInvalidoException;
 
-public class view implements IviewCerveApp{
+public class View implements IviewCerveApp{
 	
-	public String login_usuario(Negocio negocio){
+	@Override
+	public Usuario loginUsuario(){
+		Usuario u = new Usuario();
 		Scanner s = new Scanner(System.in);
 		String usuario = null;
 		String password=null;
@@ -26,13 +30,9 @@ public class view implements IviewCerveApp{
 		System.out.println("Ingrese Password:");
 		password = s.nextLine();
 
-		try {
-			negocio.ValidarUsuario(usuario, password);
-		} catch (UsuarioInvalidoException e) {
-			// TODO Bloque catch generado automáticamente
-			e.printStackTrace();
-		}
-		return usuario;
+		u.setDni(usuario);
+		u.setPaas(password);
+		return u;
 	}
 
 	
@@ -109,6 +109,10 @@ public class view implements IviewCerveApp{
 		String op = s.nextLine();
 		return op;
 	}
+
+
+
+
 
 
 }

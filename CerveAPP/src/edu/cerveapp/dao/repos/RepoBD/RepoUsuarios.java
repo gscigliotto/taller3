@@ -1,18 +1,20 @@
-package edu.cerveapp.dao.repos;
+package edu.cerveapp.dao.repos.RepoBD;
 
+import java.util.ArrayList;
 import java.util.List;
 
-
+import edu.cerveapp.dao.repos.IRepoUsuarios;
 import edu.cerveapp.entities.Usuario;
 
-public class RepoUsuarios{
+public class RepoUsuarios implements IRepoUsuarios{
 	
 	public List<Usuario> getAll() {
-		return null;
+
+ 		return null;
 	}
 
 
-	public List<Usuario> getByID(String campo, String valor) {
+	public Usuario getByID(String campo, String valor) {
 	
 		return null;
 	}

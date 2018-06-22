@@ -1,11 +1,12 @@
-package edu.cerveapp.dao.repos;
+package edu.cerveapp.dao.repos.RepoBD;
 
 import java.util.List;
 
+import edu.cerveapp.dao.repos.IRepoPedidos;
 import edu.cerveapp.entities.Pedido;
-import edu.cerveapp.entities.Usuario;
 
-public class RepoPedidos {
+
+public class RepoDBPedidos implements IRepoPedidos{
 	public List<Pedido> getAll() {
 		return null;
 	}

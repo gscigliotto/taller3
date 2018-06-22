@@ -7,8 +7,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
+
+
 import edu.cerveapp.business.Negocio;
+import edu.cerveapp.dao.repos.RepoBD.RepoBD;
+import edu.cerveapp.dao.repos.RepoList.RepoList;
 import edu.cerveapp.entities.*;
+import edu.cerveapp.vista.View;
 public class main_consola {
 	
 	
@@ -17,25 +22,11 @@ public class main_consola {
 	
 
 	public static void main(String[] args) throws UsuarioInvalidoException {
-		String opcion = "I";
-		Negocio negocio= new Negocio();	
-		Cerveceria c = new Cerveceria();
-		c.setNombreCerveceria("CerveApp 0.1");
-	//	String usuario=login_usuario(negocio);
-		
-		while(opcion!="exit"){
-			//opcion=mostrarMenu(usuario);
-			
-			switch(opcion){
-			case "1":
-				//listar_pedidos(negocio);
-				break;
-			case "2":
-				break;
-			}
-			
-		}
-		
+	//RepoBD db = new RepoBD();
+		RepoList db = new RepoList();
+		View v = new View();
+		Negocio negocio = new Negocio(db,v);
+		negocio.login();
 
 		
 	

@@ -26,10 +26,10 @@ public class Usuario {
 		this.mail = mail;
 	}
 	public String getPaas() {
-		return paas;
+		return pass;
 	}
 	public void setPaas(String paas) {
-		this.paas = paas;
+		this.pass = paas;
 	}
 	public String getTelefono() {
 		return telefono;
@@ -43,11 +43,14 @@ public class Usuario {
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
+	public void validarUsuario(String password) throws UsuarioInvalidoException {
+		if(!this.getPaas().equals(password)) throw new UsuarioInvalidoException();
+	}
 	private String nombre;
 	private String apellido;
 	private String dni;
 	private String mail;
-	private String paas;
+	private String pass;
 	private String telefono;
 	private String direccion;
 	

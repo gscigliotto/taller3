@@ -1,11 +1,10 @@
-package edu.cerveapp.vista;
+package edu.cerveapp.entities;
 
 import edu.cerveapp.business.Negocio;
-import edu.cerveapp.entities.Pedido;
 
 public interface IviewCerveApp {
 	public void listar_pedidos(Negocio negocio);
-	public String login_usuario(Negocio negocio);
+	public Usuario loginUsuario() throws UsuarioInvalidoException;
 	public String mostrarMenu(String usuario);
 	public void verPedido(Pedido pedido);
 
