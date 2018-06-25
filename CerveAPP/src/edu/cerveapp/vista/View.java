@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
-import edu.cerveapp.business.Negocio;
+import edu.cerveapp.business.Controller;
 import edu.cerveapp.entities.GustoPedido;
 import edu.cerveapp.entities.IviewCerveApp;
 import edu.cerveapp.entities.Pedido;
@@ -36,7 +36,7 @@ public class View implements IviewCerveApp{
 	}
 
 	
-	public  void listar_pedidos(Negocio negocio){
+	public  void listar_pedidos(List<Pedido> pedidos){
 		Scanner s = new Scanner(System.in);
 		String op="";
 		boolean encontre=false;
@@ -44,7 +44,7 @@ public class View implements IviewCerveApp{
 		
 		while(op!="exit")
 		{
-			List<Pedido> pedidos = negocio.ObtenerPedidos();
+			
 			Iterator<Pedido> it= pedidos.iterator();
 			
 			System.out.println("****************************************************");

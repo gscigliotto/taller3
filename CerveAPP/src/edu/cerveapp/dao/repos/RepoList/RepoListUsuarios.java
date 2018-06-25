@@ -98,6 +98,7 @@ public class RepoListUsuarios implements IRepoUsuarios {
 	@Override
 	public void Update(Usuario u) {
 		// TODO Auto-generated method stub
+		//this.getByID("DNI", u.getDni());
 
 	}
 

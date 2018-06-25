@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 
 
-import edu.cerveapp.business.Negocio;
+import edu.cerveapp.business.Controller;
 import edu.cerveapp.dao.repos.RepoBD.RepoBD;
 import edu.cerveapp.dao.repos.RepoList.RepoList;
 import edu.cerveapp.entities.*;
@@ -25,8 +25,8 @@ public class main_consola {
 	//RepoBD db = new RepoBD();
 		RepoList db = new RepoList();
 		View v = new View();
-		Negocio negocio = new Negocio(db,v);
-		negocio.login();
+		Controller negocio = new Controller(db,v);
+		negocio.startApp();
 
 		
 	
