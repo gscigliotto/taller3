@@ -9,9 +9,11 @@ import edu.cerveapp.entities.Pedido;
 import edu.cerveapp.entities.ePedido;
 
 public class RepoListPedidos implements IRepoPedidos {
-	private List<Pedido> getListaPedidos(){
-		
-		List<Pedido> pedidos = new ArrayList<Pedido>();
+	private List<Pedido> pedidos=null;
+	private int ultimo=0;
+	
+	public RepoListPedidos() {
+		pedidos = new ArrayList<Pedido>();
 		
 		Pedido p = new Pedido();
 		p.setEstadoPedido(ePedido.SOLICITADO);
@@ -24,7 +26,7 @@ public class RepoListPedidos implements IRepoPedidos {
 		p.setGustosPedido(gustoPedido);
 		p.setMonto(100);
 		
-		
+		pedidos.add(p);
 		p = new Pedido();
 		p.setEstadoPedido(ePedido.SOLICITADO);
 		p.setNumero(2);
@@ -36,7 +38,7 @@ public class RepoListPedidos implements IRepoPedidos {
 		p.setGustosPedido(gustoPedido);
 		p.setMonto(100);
 		
-		
+		pedidos.add(p);		
 		p = new Pedido();
 		p.setEstadoPedido(ePedido.SOLICITADO);
 		p.setNumero(3);
@@ -56,12 +58,13 @@ public class RepoListPedidos implements IRepoPedidos {
 		p.setGustosPedido(gustoPedido);
 		p.setMonto(100);
 		
+		pedidos.add(p);
 		
-		
-		
-		
+		ultimo=3;
+	}
+	
+	private List<Pedido> getListaPedidos(){
 		return pedidos;
-		
 	}
 
 	@Override
@@ -95,6 +98,10 @@ public class RepoListPedidos implements IRepoPedidos {
 
 	@Override
 	public void Insert(Pedido p) {
+		ultimo++;
+		p.setNumero(ultimo);
+		
+		pedidos.add(p);
 	}
 
 }

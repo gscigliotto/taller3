@@ -12,9 +12,4 @@ public class GustoPedido extends Gusto{
 		this.cantidadPedida = cantidadPedida;
 	}
 
-	public void setNomnbre(String nomnbre) {
-		// TODO Apéndice de método generado automáticamente
-		
-	}
-
 }

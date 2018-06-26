@@ -1,16 +1,36 @@
 package edu.cerveapp.dao.repos.RepoList;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.cerveapp.dao.repos.IRepoGustoStock;
 import edu.cerveapp.entities.GustoStock;
 
 public class RepoListGustoStock implements IRepoGustoStock {
+	
+	private List<GustoStock> obtenerGustos() {
+		List<GustoStock> gustosDisponibles= new ArrayList<GustoStock>();
+		GustoStock gusto = new GustoStock();
+		gusto.setNomnbre("IPA");
+		
+		gustosDisponibles.add(gusto);
+		
+		gusto = new GustoStock();
+		gusto.setNomnbre("HONNEY");
+		gustosDisponibles.add(gusto);
+		
+		gusto = new GustoStock();
+		gusto.setNomnbre("POPTER");
+		gustosDisponibles.add(gusto);
+		
+		return gustosDisponibles;
+		
+	}
 
 	@Override
 	public List<GustoStock> getAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return obtenerGustos();
 	}
 
 	@Override

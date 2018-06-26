@@ -72,8 +72,12 @@ public class RepoListUsuarios implements IRepoUsuarios {
 		while(it.hasNext()&&!encontre)
 		{
 			u = it.next();
-				if(u.getDni().equals(valor)) encontre=false;
+			if(u.getDni().equals(valor)) {
+				encontre=true;
+				
+			}
 		}
+		if (encontre==false) u=null;
 		return u;
 	}
 
