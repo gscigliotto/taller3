@@ -81,8 +81,7 @@ public class View implements IviewCerveApp{
 		Scanner s = new Scanner(System.in);
 		String gustos="";
 		GustoPedido gusto;
-	
-		
+			
 		System.out.println("****************************************************");
 		System.out.println("Numero de Pedido: "+pedido.getNumero());
 		System.out.println("Nombre: "+pedido.getUsuario().getNombre());
