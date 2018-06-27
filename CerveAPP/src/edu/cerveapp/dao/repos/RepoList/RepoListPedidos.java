@@ -6,6 +6,7 @@ import java.util.List;
 import edu.cerveapp.dao.repos.IRepoPedidos;
 import edu.cerveapp.entities.GustoPedido;
 import edu.cerveapp.entities.Pedido;
+import edu.cerveapp.entities.Usuario;
 import edu.cerveapp.entities.ePedido;
 
 public class RepoListPedidos implements IRepoPedidos {
@@ -13,11 +14,20 @@ public class RepoListPedidos implements IRepoPedidos {
 	private int ultimo=0;
 	
 	public RepoListPedidos() {
+		
+		Usuario usuario = new Usuario();
+		usuario.setApellido("APELLIDO USUARIO FLP");
+		usuario.setNombre("NOMBRE USUARIO FLP");
+		usuario.setDireccion("DIRECCION USUARIO FLP");
+		usuario.setTelefono("TELEFONO USUARIO FLP");
+		
+		
 		pedidos = new ArrayList<Pedido>();
 		
 		Pedido p = new Pedido();
 		p.setEstadoPedido(ePedido.SOLICITADO);
 		p.setNumero(1);
+		
 		List<GustoPedido> gustoPedido = new ArrayList<GustoPedido>();
 		GustoPedido gusto = new GustoPedido();
 		gusto.setNomnbre("IPA");
@@ -25,7 +35,8 @@ public class RepoListPedidos implements IRepoPedidos {
 		gustoPedido.add(gusto);
 		p.setGustosPedido(gustoPedido);
 		p.setMonto(100);
-		
+		p.setUsuario(usuario);
+
 		pedidos.add(p);
 		p = new Pedido();
 		p.setEstadoPedido(ePedido.SOLICITADO);
@@ -37,6 +48,7 @@ public class RepoListPedidos implements IRepoPedidos {
 		gustoPedido.add(gusto);
 		p.setGustosPedido(gustoPedido);
 		p.setMonto(100);
+		p.setUsuario(usuario);
 		
 		pedidos.add(p);		
 		p = new Pedido();
@@ -54,7 +66,7 @@ public class RepoListPedidos implements IRepoPedidos {
 
 		
 		
-		
+		p.setUsuario(usuario);
 		p.setGustosPedido(gustoPedido);
 		p.setMonto(100);
 		
@@ -93,11 +105,11 @@ public class RepoListPedidos implements IRepoPedidos {
 	}
 
 	@Override
-	public void Update(Pedido p) {
+	public void update(Pedido p) {
 	}
 
 	@Override
-	public void Insert(Pedido p) {
+	public void insert(Pedido p) {
 		ultimo++;
 		p.setNumero(ultimo);
 		

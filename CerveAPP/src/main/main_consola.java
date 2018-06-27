@@ -21,7 +21,7 @@ public class main_consola {
 
 	
 
-	public static void main(String[] args) throws UsuarioInvalidoException {
+	public static void main(String[] args)  {
 	//RepoBD db = new RepoBD();
 		RepoList db = new RepoList();
 		View v = new View();

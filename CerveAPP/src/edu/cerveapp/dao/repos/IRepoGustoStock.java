@@ -10,6 +10,6 @@ public interface IRepoGustoStock {
 	public List<GustoStock> getByCampoString(String campo, String valor);
 	public List<GustoStock> getByCampoInteger(String campo, Integer valor);
 	public List<GustoStock> getByCampoDouble(String campo, double valor);
-	public void Update(GustoStock u);
+	public void update(GustoStock u);
 	public void Insert(GustoStock u);
 }

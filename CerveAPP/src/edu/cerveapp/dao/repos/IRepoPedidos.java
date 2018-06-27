@@ -11,7 +11,7 @@ public interface IRepoPedidos {
 	public List<Pedido> getByCampoString(String campo, String valor);
 	public List<Pedido> getByCampoInteger(String campo, Integer valor);
 	public List<Pedido> getByCampoDouble(String campo, double valor);
-	public void Update(Pedido p) ;
-	public void Insert(Pedido p);
+	public void update(Pedido p) ;
+	public void insert(Pedido p);
 
 }

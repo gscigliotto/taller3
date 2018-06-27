@@ -33,10 +33,10 @@ public class RepoUsuarios implements IRepoUsuarios{
 		return null;
 	}
 
-	public void Update(Usuario u) {
+	public void update(Usuario u) {
 		
 	}
-	public void Insert(Usuario u) {
+	public void insert(Usuario u) {
 		
 	}
 }

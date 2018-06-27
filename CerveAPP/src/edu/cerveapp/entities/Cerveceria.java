@@ -17,7 +17,7 @@ public class Cerveceria {
 	public void setNombreCerveceria(String nombreCerveceria) {
 		this.nombreCerveceria = nombreCerveceria;
 	}
-	public void GenerarPedido(Pedido p)
+	public void generarPedido(Pedido p)
 	{
 		
 	}

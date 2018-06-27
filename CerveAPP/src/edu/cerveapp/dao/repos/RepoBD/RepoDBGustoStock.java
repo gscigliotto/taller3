@@ -31,7 +31,7 @@ public class RepoDBGustoStock implements IRepoGustoStock {
 		return null;
 	}
 
-	public void Update(GustoStock u) {
+	public void update(GustoStock u) {
 		
 	}
 	public void Insert(GustoStock u) {

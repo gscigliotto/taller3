@@ -58,7 +58,7 @@ public class RepoListGustoStock implements IRepoGustoStock {
 	}
 
 	@Override
-	public void Update(GustoStock u) {
+	public void update(GustoStock u) {
 		// TODO Auto-generated method stub
 
 	}

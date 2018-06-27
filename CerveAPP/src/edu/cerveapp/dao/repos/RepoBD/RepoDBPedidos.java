@@ -31,10 +31,10 @@ public class RepoDBPedidos implements IRepoPedidos{
 		return null;
 	}
 
-	public void Update(Pedido p) {
+	public void update(Pedido p) {
 		
 	}
-	public void Insert(Pedido p) {
+	public void insert(Pedido p) {
 		
 	}
 }
