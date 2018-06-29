@@ -48,7 +48,7 @@ public class View implements IviewCerveApp {
 				numeroRet = -1;
 			}
 
-			if (numeroRet > 0) {
+			if (numeroRet >= 0) {
 				datoOk = true;
 			} else {
 				System.out.println("Ingrese un dato valido");
