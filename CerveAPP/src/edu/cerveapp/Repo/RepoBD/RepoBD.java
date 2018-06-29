@@ -2,8 +2,8 @@ package edu.cerveapp.Repo.RepoBD;
 
 import java.util.List;
 
-import edu.cerveapp.IRepo.IRepo;
 import edu.cerveapp.entities.GustoStock;
+import edu.cerveapp.entities.IRepo;
 import edu.cerveapp.entities.Pedido;
 import edu.cerveapp.entities.Usuario;
 

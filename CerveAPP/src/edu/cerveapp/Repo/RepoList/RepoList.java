@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import edu.cerveapp.IRepo.IRepo;
-
 import edu.cerveapp.entities.GustoPedido;
 import edu.cerveapp.entities.GustoStock;
+import edu.cerveapp.entities.IRepo;
 import edu.cerveapp.entities.Pedido;
 import edu.cerveapp.entities.Usuario;
 import edu.cerveapp.entities.ePedido;
@@ -202,7 +201,6 @@ public class RepoList implements IRepo {
 			u = it.next();
 			if(u.getDni().equals(dato)) {
 				encontre=true;
-				
 			}
 		}
 		if (encontre==false) u=null;

@@ -117,8 +117,8 @@ public class View implements IviewCerveApp {
 
 	}
 
-	public void verPedido(Pedido pedido) {
-
+	public int verPedido(Pedido pedido) {
+		int op;
 		String gustos = "";
 		GustoPedido gusto;
 
@@ -134,9 +134,9 @@ public class View implements IviewCerveApp {
 			System.out.println(gustos);
 		}
 
-		System.out.println("****************************************************");
-
-		// return op;
+		System.out.println("1-Volver al listado de pedidos 2-Cambiar de Estado Pedido. -2*****************P***********************************");
+		op=obtenerTeclaInt();
+		 return op;
 
 	}
 

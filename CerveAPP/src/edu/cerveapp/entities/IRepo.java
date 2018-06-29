@@ -1,10 +1,6 @@
-package edu.cerveapp.IRepo;
+package edu.cerveapp.entities;
 
 import java.util.List;
-
-import edu.cerveapp.entities.GustoStock;
-import edu.cerveapp.entities.Pedido;
-import edu.cerveapp.entities.Usuario;
 
 public interface IRepo {
 	public List<GustoStock> obtenerGustosStock();
