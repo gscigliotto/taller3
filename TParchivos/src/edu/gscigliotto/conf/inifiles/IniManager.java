@@ -35,7 +35,7 @@ public class IniManager implements TextReader, TextWriter {
 		this.secciones = secciones;
 	}
 
-	//final static Logger log = Logger.getLogger(main.class);
+	// final static Logger log = Logger.getLogger(main.class);
 
 	public String getRuta() {
 		return ruta;
@@ -46,7 +46,7 @@ public class IniManager implements TextReader, TextWriter {
 	}
 
 	public IniManager() {
-		File f = new File(Paths.get("").toString()+"\\DBConfig.ini");
+		File f = new File(Paths.get("").toString() + "\\DBConfig.ini");
 		try {
 			f.createNewFile();
 		} catch (IOException e) {
@@ -59,9 +59,6 @@ public class IniManager implements TextReader, TextWriter {
 
 		setRuta(paht);
 		File f = new File(paht);
-
-		
-
 
 		if (!f.exists()) {
 
@@ -99,7 +96,7 @@ public class IniManager implements TextReader, TextWriter {
 				linea = this.getLinea(sc);
 
 			} catch (Exception e) {
-				//log.error(e.getMessage() + " sefue");
+				// log.error(e.getMessage() + " sefue");
 			}
 
 		} else {
@@ -138,9 +135,6 @@ public class IniManager implements TextReader, TextWriter {
 				sec.setItem(linea.split("=")[0], linea.split("=")[1]);
 				linea = this.readLine();
 
-
-
-
 			}
 
 		}
@@ -155,13 +149,13 @@ public class IniManager implements TextReader, TextWriter {
 
 	}
 
-	public Seccion getSeccion(String nombre) {
+	public Seccion getSeccion(String nombre) throws NotFoundSeccionExeption {
 
 		return this.buscarSeccion(nombre);
 
 	}
 
-	private Seccion buscarSeccion(String str) {
+	private Seccion buscarSeccion(String str) throws NotFoundSeccionExeption {
 		Iterator<Seccion> it = secciones.iterator();
 		Seccion sc = null;
 		boolean encontre = false;
@@ -171,8 +165,9 @@ public class IniManager implements TextReader, TextWriter {
 				encontre = true;
 
 		}
-		
-		if(!encontre) throw new RuntimeException();
+
+		if (!encontre)
+			throw new NotFoundSeccionExeption();
 
 		return sc;
 
@@ -182,7 +177,7 @@ public class IniManager implements TextReader, TextWriter {
 
 	}
 
-	public void setItem(String sec, String clave, String valor) {
+	public void setItem(String sec, String clave, String valor) throws NotFoundSeccionExeption {
 		Seccion seccion = this.getSeccion(sec);
 		if (seccion == null)
 			seccion = new Seccion(sec);
@@ -191,28 +186,27 @@ public class IniManager implements TextReader, TextWriter {
 
 	public void save() {
 		try (FileWriter filew = new FileWriter(this.getRuta())) {
-			//BufferedWriter bw = new BufferedWriter(filew);
+			// BufferedWriter bw = new BufferedWriter(filew);
 			Iterator<Seccion> it = this.getSecciones().iterator();
 			Seccion se = null;
 			while (it.hasNext()) {
 				se = (Seccion) it.next();
 				se.save(filew);
-			//	bw.write("[" + se.getNombre() + "]");
-			//	bw.newLine();
-			//	Iterator<String> itkeys = se.getItems().keySet().iterator();
+				// bw.write("[" + se.getNombre() + "]");
+				// bw.newLine();
+				// Iterator<String> itkeys = se.getItems().keySet().iterator();
 
-			//	while (itkeys.hasNext()) {
-			//		String key;
-			//		key = (String) itkeys.next();
-			//		bw.write(key + "=" + se.getItems().get(key));
-			//		bw.newLine();
-			//	}
+				// while (itkeys.hasNext()) {
+				// String key;
+				// key = (String) itkeys.next();
+				// bw.write(key + "=" + se.getItems().get(key));
+				// bw.newLine();
+				// }
 			}
-			//bw.close();
-
+			// bw.close();
 
 		} catch (Exception e) {
-			//log.error(e.getMessage());
+			// log.error(e.getMessage());
 		}
 	}
 

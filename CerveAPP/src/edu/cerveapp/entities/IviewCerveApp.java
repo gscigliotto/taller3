@@ -8,7 +8,7 @@ public interface IviewCerveApp {
 	public void listarPedidos(List<Pedido> pedidos);
 	public Usuario loginUsuario() throws UsuarioInvalidoException;
 	public String mostrarMenu(String usuario);
-	public void verPedido(Pedido pedido);
+	public int verPedido(Pedido pedido);
 	public void mostrarMsg(String msg);
 	
 	public Pedido crearPedido(Controller ctx);

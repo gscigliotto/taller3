@@ -1,6 +1,7 @@
 package tc3.tp3.utils.db;
 
 import edu.gscigliotto.conf.inifiles.IniManager;
+import edu.gscigliotto.conf.inifiles.NotFoundSeccionExeption;
 import edu.gscigliotto.conf.inifiles.Seccion;
 import tc3.tp3.utils.ini.IniPersistent;
 
@@ -16,7 +17,7 @@ public class IniPersDBEnvironment extends DBEnvironment implements IniPersistent
 		
 	}
 	
-	public IniPersDBEnvironment(String environmentName, IniManager im)
+	public IniPersDBEnvironment(String environmentName, IniManager im) throws NotFoundSeccionExeption
 	{
 		super(environmentName);
 		this.loadFromIni(im, environmentName);
@@ -30,7 +31,7 @@ public class IniPersDBEnvironment extends DBEnvironment implements IniPersistent
 	}
 	
 	@Override
-	public void updateIni(IniManager iniManager) {
+	public void updateIni(IniManager iniManager) throws NotFoundSeccionExeption {
 	
 		Seccion s= iniManager.getSeccion(this.getEnvironmentName());
 		s.setItem(K_DRIVER, this.getDriver());
@@ -44,7 +45,7 @@ public class IniPersDBEnvironment extends DBEnvironment implements IniPersistent
 		
 	}
 	@Override
-	public void loadFromIni(IniManager iniManager, String sectionName) {
+	public void loadFromIni(IniManager iniManager, String sectionName) throws NotFoundSeccionExeption {
 		Seccion s =iniManager.getSeccion(sectionName);
 		this.setDriver(s.getItems().get(K_DRIVER));
 		this.setServer(s.getItems().get(K_SERVER));

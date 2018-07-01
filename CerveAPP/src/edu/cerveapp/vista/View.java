@@ -23,14 +23,14 @@ public class View implements IviewCerveApp {
 		Scanner s = new Scanner(System.in);
 		do {
 			cadena = s.nextLine();
-			
+
 			if (cadena.length() > 0) {
 				datoOk = true;
 			} else {
 				System.out.println("Ingrese un dato valido");
 			}
 		} while (!datoOk);
-	
+
 		return cadena;
 
 	}
@@ -55,7 +55,7 @@ public class View implements IviewCerveApp {
 			}
 
 		} while (!datoOk);
-		
+
 		return numeroRet;
 
 	}
@@ -80,7 +80,6 @@ public class View implements IviewCerveApp {
 		u.setPaas(password);
 		return u;
 	}
-
 
 	public void listarPedidos(List<Pedido> pedidos) {
 
@@ -108,7 +107,7 @@ public class View implements IviewCerveApp {
 					Pedido p = (Pedido) it.next();
 					if (String.valueOf(p.getNumero()).equals(op)) {
 						encontre = true;
-						verPedido(p);
+						int retop = verPedido(p);
 					}
 				}
 
@@ -134,9 +133,10 @@ public class View implements IviewCerveApp {
 			System.out.println(gustos);
 		}
 
-		System.out.println("1-Volver al listado de pedidos 2-Cambiar de Estado Pedido. -2*****************P***********************************");
-		op=obtenerTeclaInt();
-		 return op;
+		System.out.println(
+				"1-Volver al listado de pedidos 2-Cambiar de Estado Pedido. -2*****************P***********************************");
+		op = obtenerTeclaInt();
+		return op;
 
 	}
 
@@ -222,7 +222,7 @@ public class View implements IviewCerveApp {
 	@Override
 	public void mostrarMsg(String msg) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

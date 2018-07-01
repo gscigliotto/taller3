@@ -47,7 +47,7 @@ public class main {
 		BufferedTextWriter bw = null;
 
 		try {
-			bw = new BufferedTextWriter(Ruta.toAbsolutePath().toString()+"\\main.txt");
+			bw = new BufferedTextWriter(Ruta.toAbsolutePath().toString() + "\\main.txt");
 		} catch (Exception e) {
 
 		}
@@ -57,7 +57,7 @@ public class main {
 		if (br.isReady() && bw.isReady()) {
 			while (txt != null) {
 				txt = br.readLine();
-				if(txt!=null)
+				if (txt != null)
 					bw.writeLine(txt);
 				log.error(txt);
 			}
@@ -66,9 +66,7 @@ public class main {
 
 		br.close();
 		bw.close();
-		
-		
-		
+
 		/*
 		 * FIN EJERCICIO 1
 		 */

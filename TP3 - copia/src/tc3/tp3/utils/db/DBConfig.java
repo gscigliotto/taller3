@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import edu.gscigliotto.conf.inifiles.IniManager;
+import edu.gscigliotto.conf.inifiles.NotFoundSeccionExeption;
 import edu.gscigliotto.conf.inifiles.Seccion;
 import tc3.tp3.utils.ini.IniPersistent;
 
@@ -25,7 +26,7 @@ public class DBConfig {
 	public DBConfig() {
 	
 	}
-	public DBConfig(String folder, String filename) {
+	public DBConfig(String folder, String filename) throws NotFoundSeccionExeption {
 		
 		try {
 			im = new IniManager(folder+"\\"+filename);
@@ -44,7 +45,25 @@ public class DBConfig {
 		}
 		
 	}
-	
+	public DBConfig(String filename) throws NotFoundSeccionExeption {
+		
+		try {
+			im = new IniManager(filename);
+		
+			
+		} catch (FileNotFoundException e) {
+
+		}
+		try {
+			im.load();
+			Seccion s= im.getSeccion(this.ROOT_SECTION);
+			dben = new DBEnvironment(s.getItems().get("environment"),s.getItems().get("driver"),s.getItems().get("server"),s.getItems().get("port"),s.getItems().get("database"),s.getItems().get("username"),s.getItems().get("password")); 
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	public void setDefaultEnvieronment(String environmentName)throws RuntimeException {
 		
 	}

@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/TParchivos"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/IniManager"/>
+	<classpathentry kind="lib" path="C:/Users/gscigliotto/git/taller3/TP3 - copia/jar/mssql-jdbc-6.4.0.jre8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

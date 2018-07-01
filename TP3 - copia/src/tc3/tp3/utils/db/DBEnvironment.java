@@ -2,7 +2,7 @@ package tc3.tp3.utils.db;
 
 public class DBEnvironment {
 
-	private static final String CONN_STRING_TEMPLATE="jdbc:%s://%s:%s;database=%s;user=%s;password=%s";
+	private static final String CONN_STRING_TEMPLATE="jdbc:%s://%s;database=%s;user=%s;password=%s";
 	private static final String ERR_INVALID_ATTRIBUTE="Nombre del Atributo invalido";
 	private static final String ERR_INVALID_ATT_VALUE="Valor Invalido para el atributo %s ('%s')";
 	private static final String UNDEFINED="[UNDEFINED]";
@@ -85,7 +85,7 @@ public class DBEnvironment {
 	}
 	public String getURL(){
 		//"jdbc:%s://%s:%s;database=%s;user=%s;password=%s"
-		return String.format(CONN_STRING_TEMPLATE,getDriver(),getServer(),getPort(),getDatabase(),getUsername(),getPassword());
+		return String.format(CONN_STRING_TEMPLATE,getDriver(),getServer(),getDatabase(),getUsername(),getPassword());
 	}
 	public DBEnvironment(String environmentName){
 		this.setEnvironmentName(environmentName);
