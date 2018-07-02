@@ -46,6 +46,26 @@ public class Usuario {
 	public void validarUsuario(String password) throws UsuarioInvalidoException {
 		if(!this.getPaas().equals(password)) throw new UsuarioInvalidoException();
 	}
+	public Usuario(int id, String dni,String nombre,String apellido,String telefono,String mail, String pass) {
+		setId(id);
+		setApellido(apellido);
+		setDni(dni);
+		setNombre(nombre);
+		setTelefono(telefono);
+		setMail(mail);
+		setPaas(pass);
+		
+	}
+	public Usuario() {
+
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	private int id;
 	private String nombre;
 	private String apellido;
 	private String dni;

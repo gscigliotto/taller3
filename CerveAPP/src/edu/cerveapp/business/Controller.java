@@ -1,7 +1,14 @@
 package edu.cerveapp.business;
 
 
+
+import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import edu.cerveapp.entities.GustoStock;
 import edu.cerveapp.entities.IRepo;
@@ -9,7 +16,7 @@ import edu.cerveapp.entities.IviewCerveApp;
 import edu.cerveapp.entities.Pedido;
 import edu.cerveapp.entities.Usuario;
 import edu.cerveapp.entities.UsuarioInvalidoException;
-
+import org.json.JSONException;
 public class Controller {
 
 
@@ -25,6 +32,7 @@ public class Controller {
 	}
 
 	public void startApp()  {
+		ActualizarPedidos();
 		String opcion;
 		Usuario u = login();
 		do {
@@ -38,6 +46,7 @@ public class Controller {
 					Pedido p = view.crearPedido(this);
 					repo.insertarPedido(p);
 					break;
+
 				case "exit":
 					break;
 			}
@@ -52,7 +61,29 @@ public class Controller {
 	}
 
 
+	private void ActualizarPedidos() {
+		try {
+			JSONObject obj = new JsonReader().readJsonFromUrl("https://labbo.co/guille/test.txt");
+			
+			Iterator<String> it = obj.keys();
+			System.out.println("userid"+obj.getJSONObject("originalDetectIntentRequest").getJSONObject("payload").get("user"));
+			System.out.println("Parametros: "+obj.getJSONObject("queryResult").get("parameters"));
+//			while (it.hasNext())
+//			{
+//				String id=it.next();
+//				System.out.println(id+": "+obj.get(id));
+				
+//			}
 
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	
 	

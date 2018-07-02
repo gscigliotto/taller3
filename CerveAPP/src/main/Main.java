@@ -51,12 +51,12 @@ public class Main {
 				break;
 		
 			case "bd":
-				if(seccion.getItems().get("recreate_all")!="true") {
-					db=new RepoBD(APP_DIR + CONF_DIRECTORY + seccion.getItems().get("dbconfig_file"),false);
+				if(seccion.getItems().get("recreate_all").equals("true")) {
+					db=new RepoBD(APP_DIR + CONF_DIRECTORY + seccion.getItems().get("dbconfig_file"),true);
 				}
 				else
 				{
-					db=new RepoBD(APP_DIR + CONF_DIRECTORY + seccion.getItems().get("dbconfig_file"),true);
+					db=new RepoBD(APP_DIR + CONF_DIRECTORY + seccion.getItems().get("dbconfig_file"),false);
 				}
 				break;
 			}			

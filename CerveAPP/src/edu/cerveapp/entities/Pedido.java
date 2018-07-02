@@ -4,9 +4,50 @@ import java.util.List;
 
 public class Pedido {
 	
+
+	private int id;
 	private Usuario usuario;
 	private List<GustoPedido> gustosPedido;
 	private double monto;
+	private int numero;
+
+	
+	public Pedido(int id, int numero, double monto, List<GustoPedido> gustospedidos,String estado,Usuario usuario) {
+		setId(id);
+		setNumero(numero);
+		setMonto(monto);
+		setGustos(gustospedidos);
+		setEstado(estado);
+		setUsuario(usuario);
+		
+	}
+	public Pedido(int id, int numero, double monto,String estado) {
+		setId(id);
+		setNumero(numero);
+		setMonto(monto);
+		setEstado(estado);
+	
+		
+	}
+	public Pedido() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+	private String estado;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	private ePedido estadoPedido;
+	
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -44,8 +85,7 @@ public class Pedido {
 	public void setNumero(int numero) {
 		this.numero = numero;
 	}
-	private int numero;
 	
-	private ePedido estadoPedido;
+
 
 }
