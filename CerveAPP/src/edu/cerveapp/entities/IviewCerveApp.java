@@ -5,7 +5,7 @@ import java.util.List;
 import edu.cerveapp.business.Controller;
 
 public interface IviewCerveApp {
-	public void listarPedidos(List<Pedido> pedidos);
+	public void listarPedidos(List<Pedido> pedidos,Controller ctx);
 	public Usuario loginUsuario() throws UsuarioInvalidoException;
 	public String mostrarMenu(String usuario);
 	public int verPedido(Pedido pedido);

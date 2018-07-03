@@ -7,9 +7,9 @@ INSERT INTO [dbo].[usuarios]
            ,[telefono]
            ,[mail]
 		   ,[pass]
-		   ,userId)
+		   ,userId,direccion)
      VALUES
-           ('30333280','Guillermo','Scigliotto','1540716602','gscigliotto@gmail.com','123456','ABwppHH-BZMuTrhlQgQAHUCXH2VwMSsGt0vw6OaeadiCvVo5Cpmj1nsfT3JESgJ74DxJoC0z6wmLOh9rVg')
+           ('30333280','Guillermo','Scigliotto','1540716602','gscigliotto@gmail.com','123456','ABwppHH-BZMuTrhlQgQAHUCXH2VwMSsGt0vw6OaeadiCvVo5Cpmj1nsfT3JESgJ74DxJoC0z6wmLOh9rVg','Av. Corrientes 4258 PB b')
 GO
 INSERT INTO [dbo].[gustos]
            ([nombre_gusto]

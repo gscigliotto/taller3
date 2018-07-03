@@ -2,13 +2,10 @@ package edu.cerveapp.business;
 
 
 
-import java.io.IOException;
-import java.util.Iterator;
+
 import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+
 
 import edu.cerveapp.entities.GustoStock;
 import edu.cerveapp.entities.IRepo;
@@ -17,23 +14,26 @@ import edu.cerveapp.entities.IviewCerveApp;
 import edu.cerveapp.entities.Pedido;
 import edu.cerveapp.entities.Usuario;
 import edu.cerveapp.entities.UsuarioInvalidoException;
+import edu.gscigliotto.conf.inifiles.IniManager;
+import edu.gscigliotto.conf.inifiles.NotFoundSeccionExeption;
+
 import org.json.JSONException;
 public class Controller {
 
 
 	private IviewCerveApp view;
 	private IRepo repo;
-	public Controller(IRepo repo, IviewCerveApp view) {
+	private IniManager configuracion;
+	public Controller(IRepo repo, IviewCerveApp view,IniManager configuracion) {
 		this.view = view;
 		this.repo = repo;
+		this.configuracion=configuracion;
 	}
 
-	private void cambiarEstadoPedido(Pedido pedido) {
 
-	}
 
 	public void startApp()  {
-		buscarPedidos();
+
 		String opcion;
 		Usuario u = login();
 		do {
@@ -41,20 +41,30 @@ public class Controller {
 
 			switch (opcion) {
 				case "1":
-					view.listarPedidos(repo.obtenerPedidos());
+					view.listarPedidos(repo.obtenerPedidos(),this);
 					break;
 				case "2":
 					Pedido p = view.crearPedido(this);
 					repo.insertarPedido(p);
 					break;
-
+				case "3":
+				try {
+					buscarPedidos();
+				} catch (NotFoundSeccionExeption e) {
+					// TODO Auto-generated catch block
+					view.mostrarMsg("Hay un problema de configuracion."+e.getMessage());
+				}
+					view.mostrarMsg("Se cargaron todos los pedidos de la PaginaWeb!!");
+					break;
 				case "exit":
 					break;
 			}
 		}while(opcion!="exit");
 
 	}
-
+	public void actualilzarPedido(Pedido p) {
+		repo.actualizarPedido(p);
+	}
 	public List<GustoStock> obtenerGustos() {
 		
 
@@ -62,10 +72,12 @@ public class Controller {
 	}
 
 
-	private void buscarPedidos() {
+	private void buscarPedidos() throws NotFoundSeccionExeption {
 		try {
 			
-			PedidosWeb pedidosWeb = new PedidosWeb("https://labbo.co/guille/salida_plana.txt",repo);
+			
+			
+			PedidosWeb pedidosWeb = new PedidosWeb(configuracion.getSeccion("ENTORNO").getItems().get("url_pedidos"),repo);
 			List<Pedido>pedidosweb=pedidosWeb.procesar();
 			
 

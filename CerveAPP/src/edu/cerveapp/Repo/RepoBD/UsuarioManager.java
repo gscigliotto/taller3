@@ -32,7 +32,7 @@ public class UsuarioManager {
 
 	public void crearTabla() {
 		String query = "CREATE TABLE  usuarios (id INT NOT NULL IDENTITY(1,1) PRIMARY KEY, dni VARCHAR(10), nombre VARCHAR(50), apellido "
-				+ "VARCHAR(50), telefono VARCHAR(30), mail VARCHAR(40),pass VARCHAR(20),userId VARCHAR(100))";
+				+ "VARCHAR(50), telefono VARCHAR(30), mail VARCHAR(40),pass VARCHAR(20),userId VARCHAR(100), direccion VARCHAR(30))";
 
 		try {
 			Statement statement = conn.createStatement();
@@ -45,7 +45,7 @@ public class UsuarioManager {
 	}
 
 	public List<Usuario> obtenerUsuarios() {
-		String query = "SELECT id,dni,nombre,apellido,telefono,mail, pass from USUARIOS";
+		String query = "SELECT id,dni,nombre,apellido,telefono,mail, pass,direccion,userId from USUARIOS";
 		List<Usuario> usuarios = new ArrayList<Usuario>();
 
 		try {
@@ -53,7 +53,7 @@ public class UsuarioManager {
 			while (rs.next()) {
 				usuarios.add(new Usuario(rs.getInt("id"), rs.getString("dni"), rs.getString("nombre"),
 						rs.getString("apellido"), rs.getString("telefono"), rs.getString("mail"),
-						rs.getString("pass")));
+						rs.getString("pass"),rs.getString("direccion"),rs.getString("idExt")));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -64,7 +64,7 @@ public class UsuarioManager {
 	}
 
 	public Usuario obtenerUsuarios(String dni) {
-		String query ="SELECT id,dni,nombre,apellido,telefono,mail, pass from USUARIOS where dni=?";
+		String query ="SELECT id,dni,nombre,apellido,telefono,mail, pass,direccion,userId idExt from USUARIOS where dni=?";
 		Usuario usuario = null;
 
 
@@ -75,7 +75,7 @@ public class UsuarioManager {
 			
 			
 			while (rs.next()) {
-				usuario=new Usuario(rs.getInt("id"),rs.getString("dni"),rs.getString("nombre"),rs.getString("apellido"),rs.getString("telefono"),rs.getString("mail"),rs.getString("pass"));
+				usuario=new Usuario(rs.getInt("id"),rs.getString("dni"),rs.getString("nombre"),rs.getString("apellido"),rs.getString("telefono"),rs.getString("mail"),rs.getString("pass"),rs.getString("direccion"),rs.getString("idExt"));
 				}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -92,7 +92,7 @@ public class UsuarioManager {
 
 
 	public Usuario obtenerUsuariosById(String id) {
-		String query ="SELECT id,dni,nombre,apellido,telefono,mail, pass from USUARIOS where id=?";
+		String query ="SELECT id,dni,nombre,apellido,telefono,mail, pass,direccion,userId idExt  from USUARIOS where id=?";
 		Usuario usuario = null;
 
 
@@ -103,7 +103,7 @@ public class UsuarioManager {
 			
 			
 			while (rs.next()) {
-				usuario=new Usuario(rs.getInt("id"),rs.getString("dni"),rs.getString("nombre"),rs.getString("apellido"),rs.getString("telefono"),rs.getString("mail"),rs.getString("pass"));
+				usuario=new Usuario(rs.getInt("id"),rs.getString("dni"),rs.getString("nombre"),rs.getString("apellido"),rs.getString("telefono"),rs.getString("mail"),rs.getString("pass"),rs.getString("direccion"),rs.getString("idExt"));
 				}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -115,7 +115,7 @@ public class UsuarioManager {
 
 
 	public Usuario obtenerUsuariosByIdExt(String id) {
-		String query ="SELECT id,dni,nombre,apellido,telefono,mail, pass from USUARIOS where userId=?";
+		String query ="SELECT id,dni,nombre,apellido,telefono,mail, pass,direccion,userId idExt  from USUARIOS where userId=?";
 		Usuario usuario = null;
 
 
@@ -126,7 +126,7 @@ public class UsuarioManager {
 			
 			
 			while (rs.next()) {
-				usuario=new Usuario(rs.getInt("id"),rs.getString("dni"),rs.getString("nombre"),rs.getString("apellido"),rs.getString("telefono"),rs.getString("mail"),rs.getString("pass"));
+				usuario=new Usuario(rs.getInt("id"),rs.getString("dni"),rs.getString("nombre"),rs.getString("apellido"),rs.getString("telefono"),rs.getString("mail"),rs.getString("pass"),rs.getString("direccion"),rs.getString("idExt"));
 				}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

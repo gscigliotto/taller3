@@ -46,14 +46,17 @@ public class Usuario {
 	public void validarUsuario(String password) throws UsuarioInvalidoException {
 		if(!this.getPaas().equals(password)) throw new UsuarioInvalidoException();
 	}
-	public Usuario(int id, String dni,String nombre,String apellido,String telefono,String mail, String pass) {
+	public Usuario(int id, String dni,String nombre,String apellido,String telefono,String mail, String pass,String direccion,String userId) {
 		setId(id);
 		setApellido(apellido);
 		setDni(dni);
 		setNombre(nombre);
 		setTelefono(telefono);
 		setMail(mail);
+		setDireccion(direccion);
 		setPaas(pass);
+		setIdExt(userId);
+		
 		
 	}
 	public Usuario() {

@@ -19,6 +19,7 @@ import edu.cerveapp.entities.IRepo;
 import edu.cerveapp.entities.InvalidConfigurationException;
 import edu.cerveapp.entities.Pedido;
 import edu.cerveapp.entities.Usuario;
+import edu.cerveapp.entities.ePedido;
 
 public class PedidosWeb {
 	public IRepo getRepo() {
@@ -84,7 +85,7 @@ public class PedidosWeb {
 				List<GustoPedido> gustosPedido = new ArrayList<GustoPedido>();
 				GustoStock gustoStock = getGustosStock(str[2]);
 
-				pedido = new Pedido(0, (gustoStock.getPrecio() * Integer.parseInt(str[3])), null, "I", u);
+				pedido = new Pedido(0, (gustoStock.getPrecio() * Integer.parseInt(str[3])), null, ePedido.SOLICITADO, u);
 				gustosPedido.add(new GustoPedido(0, pedido.getIdRaw(), gustoStock.getId(), Double.parseDouble(str[3]),
 						gustoStock.getPrecio(), gustoStock.getNomnbre()));
 				pedido.setGustosPedido(gustosPedido);

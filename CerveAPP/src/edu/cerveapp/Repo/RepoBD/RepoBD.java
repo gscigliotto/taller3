@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import edu.cerveapp.entities.GustoPedido;
 import edu.cerveapp.entities.GustoStock;
 import edu.cerveapp.entities.IRepo;
 import edu.cerveapp.entities.InvalidConfigurationException;
@@ -33,7 +34,7 @@ public class RepoBD implements IRepo {
 		try {
 			conn = manager.getNewConnection(config.getURL());
 			gustoStockMng = new GustoStockManager(conn);
-			pedidoMng = new PedidoManager(conn);
+			pedidoMng = new PedidoManager(conn,this);
 			usuarioMng = new UsuarioManager(conn);
 			gustoPedidoMng= new GustosPedidoManager(conn);
 
@@ -118,7 +119,7 @@ public class RepoBD implements IRepo {
 
 	@Override
 	public void actualizarPedido(Pedido p) {
-		// TODO Auto-generated method stub
+		pedidoMng.ActualizarPedido(p);
 
 	}
 
@@ -142,6 +143,11 @@ public class RepoBD implements IRepo {
 	@Override
 	public GustoStock getGustoByNombre(String gustonNombre) {
 		return gustoStockMng.obtenerGustos(gustonNombre);	
+	}
+
+	@Override
+	public List<GustoPedido> obtenerGustoPedido(String idRaw) {
+		return gustoPedidoMng.obtenerGustos(idRaw);
 	}
 
 }

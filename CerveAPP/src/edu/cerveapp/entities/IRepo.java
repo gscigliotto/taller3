@@ -16,5 +16,7 @@ public interface IRepo {
 	public Usuario getUsuarioByIdExterno(String IdExterno);
 	public GustoStock getGustoByNombre(String gustonNombre);
 	
+	public List<GustoPedido> obtenerGustoPedido(String idRaw);
+	
 	
 }

@@ -61,5 +61,24 @@ public class GustosPedidoManager {
 		}
 		return gustos;
 	}
+	
+	public List<GustoPedido> obtenerGustos(String idRaw) {
+		String query = "  SELECT g.id, id_gusto,p.idRaw id_pedido,gp.id_gusto,gp.cantidad_pedida, g.precio_litro, g.nombre_gusto nombre_gusto from gustosPedidos gp, gustos g,pedidos p where p.idraw=gp.id_pedidoRaw and p.idraw=? and  g.id=gp.id_gusto  ";
+		List<GustoPedido> gustos = new ArrayList<GustoPedido>();
+
+		try {
+			PreparedStatement preparedstatement=conn.prepareStatement(query);
+			preparedstatement.setString(1, idRaw);
+			ResultSet rs =preparedstatement.executeQuery();
+			while (rs.next()) {
+				gustos.add(new GustoPedido(rs.getInt("id_gusto"), rs.getString("id_pedido"),rs.getInt("id_gusto"),rs.getDouble("cantidad_pedida"), rs.getDouble("precio_litro"),rs.getString("nombre_gusto")));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return gustos;
+	}
+
 
 }

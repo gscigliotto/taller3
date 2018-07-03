@@ -6,18 +6,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import edu.cerveapp.entities.GustoPedido;
+import edu.cerveapp.entities.IRepo;
 import edu.cerveapp.entities.Pedido;
 import edu.cerveapp.entities.Usuario;
+import edu.cerveapp.entities.ePedido;
 
 public class PedidoManager {
 	private Connection conn;
+	private IRepo repo;
 
-	public PedidoManager(Connection conn) {
+	public PedidoManager(Connection conn, IRepo repo) {
 
 		this.conn = conn;
+		this.repo = repo;
 	}
 
 	public void borrarTabla() {
@@ -34,7 +39,7 @@ public class PedidoManager {
 	}
 
 	public void crearTabla() {
-		String query = "CREATE TABLE  pedidos (id INT NOT NULL IDENTITY(1,1) PRIMARY KEY, id_usuario int, estado VARCHAR(1),monto DECIMAL(8,2),idRaw VARCHAR(100))";
+		String query = "CREATE TABLE  pedidos (id INT NOT NULL IDENTITY(1,1) PRIMARY KEY, id_usuario int, estado VARCHAR(10),monto DECIMAL(8,2),idRaw VARCHAR(100))";
 
 		try {
 			Statement statement = conn.createStatement();
@@ -45,7 +50,20 @@ public class PedidoManager {
 		}
 
 	}
+	public void ActualizarPedido(Pedido p) {
+		String query = "UPDATE PEDIDOS SET ESTADO=? WHERE IDRAW=? ";
 
+		try {
+			PreparedStatement statement = conn.prepareStatement(query);
+			statement.setString(1,p.getEstadoPedido().toString());
+			statement.setString(2,p.getIdRaw().toString());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 	public void insertarPedido(Pedido pedido) {
 		String query = "INSERT INTO pedidos (id_usuario,idRaw,estado,monto) VALUES (?,?,?,?)";
 		try {
@@ -53,22 +71,26 @@ public class PedidoManager {
 			statement.setInt(1, pedido.getUsuario().getId());
 			statement.setString(2, pedido.getIdRaw());
 
-			statement.setString(3, pedido.getEstado());
+			statement.setString(3, pedido.getEstadoPedido().toString());
 			statement.setFloat(4, (float) pedido.getMonto());
 			statement.execute();
-			try {
-				query = "INSERT INTO gustosPedidos (id_pedidoRaw,id_gusto,cantidad_pedida,precio_litro) VALUES (?,?,?,?)";
-				statement = conn.prepareStatement(query);
-				statement.setString(1, pedido.getIdRaw());
-				statement.setInt(2, pedido.getGustos().get(0).getId_gusto());
-				statement.setFloat(3,(float) pedido.getGustosPedido().get(0).getCantidadPedida());
-				statement.setFloat(4,(float) pedido.getGustosPedido().get(0).getPreciolitro());
-				statement.execute();
-			
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			Iterator <GustoPedido> it =pedido.getGustosPedido().iterator();
+			while(it.hasNext()) {
+				GustoPedido gusto= it.next();
+				try {
+	
+						query = "INSERT INTO gustosPedidos (id_pedidoRaw,id_gusto,cantidad_pedida,precio_litro) VALUES (?,?,?,?)";
+						statement = conn.prepareStatement(query);
+						statement.setString(1, pedido.getIdRaw());
+						statement.setInt(2, gusto.getId_gusto());
+						statement.setFloat(3, (float) gusto.getCantidadPedida());
+						statement.setFloat(4, (float) gusto.getPreciolitro());
+						statement.execute();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 
 		} catch (SQLException e) {
@@ -78,31 +100,17 @@ public class PedidoManager {
 	}
 
 	public List<Pedido> obtenerPedidos() {
-		//String query = "select * from pedidos pe inner join usuarios us	on pe.id_usuario=us.id inner join gustospedidos gp on pe.id=gp.id_pedido inner join gustos gu on gp.id_gusto=gu.id ";
-
-		String query = "select pe.id id_pedido,pe.monto,pe.estado estado,pe.idraw idraw,us.id id_usuario,gp.id idgustoPedido,gp.id_gusto id_Gusto,";
-		query += " gp.cantidad_pedida cantidad_pedida,gp.precio_litro precio_litro,gu.id id_gusto, gu.nombre_gusto gusto, ";
-		query += " us.dni dni, us.apellido apellido,us.mail mail,us.nombre nombre_usuario,us.telefono telefono,us.pass pass ";
-		query += " from pedidos pe ";
-		query += " inner join usuarios us	on pe.id_usuario=us.id ";
-		query += " inner join gustospedidos gp on pe.idraw=gp.id_pedidoRaw ";
-		query += " inner join gustos gu on gp.id_gusto=gu.id";
-		
 		List<Pedido> pedidos = new ArrayList<Pedido>();
+		String query = "Select p.id,monto, id_usuario, estado,monto,idRaw, dni from pedidos p, usuarios u where p.id_usuario=u.id  ";
 
 		try {
 			ResultSet rs = conn.prepareStatement(query).executeQuery();
 			while (rs.next()) {
-				Pedido pedido = new Pedido(rs.getInt("id_pedido"), rs.getString("idraw"), rs.getDouble("monto"),null, rs.getString("estado"),new Usuario(rs.getInt("id_pedido"),rs.getString("dni"),rs.getString("nombre_usuario"),rs.getString("apellido"),rs.getString("telefono"),rs.getString("mail"),rs.getString("pass")));
-				List<GustoPedido> gustos= new ArrayList<GustoPedido>();
-				gustos.add(new GustoPedido(rs.getInt("idgustoPedido"),rs.getString("idraw"), rs.getInt("id_gusto"),  rs.getDouble("cantidad_pedida"), rs.getDouble("precio_litro"),rs.getString("gusto")));
-				
-				while (rs.next()) {
-					gustos.add(new GustoPedido(rs.getInt("idgustoPedido"),rs.getString("idraw"), rs.getInt("id_gusto"),  rs.getDouble("cantidad_pedida"), rs.getDouble("precio_litro"),rs.getString("gusto")));
-				}
-				pedido.setGustosPedido(gustos);
-				pedidos.add(pedido);
+				Usuario u = repo.buscarUsuario(rs.getString("dni"));
+				List<GustoPedido> gustos = repo.obtenerGustoPedido(rs.getString("idRaw"));
 
+				pedidos.add(new Pedido(rs.getInt("id"),rs.getString("idRaw"), rs.getFloat("monto"), gustos,
+						ePedido.valueOf(rs.getString("estado")), u));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -111,5 +119,4 @@ public class PedidoManager {
 		return pedidos;
 
 	}
-
 }

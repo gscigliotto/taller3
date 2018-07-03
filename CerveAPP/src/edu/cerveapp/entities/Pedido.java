@@ -21,45 +21,39 @@ public class Pedido {
 	private List<GustoPedido> gustosPedido;
 	private double monto;
 	
-	public Pedido(int id ,double monto, List<GustoPedido> gustospedidos,String estado,Usuario usuario)  {
+	public Pedido(int id ,double monto, List<GustoPedido> gustospedidos,ePedido estado,Usuario usuario)  {
 		setId(id);
 		generateRaw();
 	
 		setMonto(monto);
 		setGustos(gustospedidos);
-		setEstado(estado);
+		setEstadoPedido(estado);
 		setUsuario(usuario);
 	}
 
 	
-	public Pedido(int id,String idraw ,double monto, List<GustoPedido> gustospedidos,String estado,Usuario usuario) {
+	public Pedido(int id,String idraw ,double monto, List<GustoPedido> gustospedidos,ePedido estado,Usuario usuario) {
 		setId(id);
 		setIdRaw(idraw);
 	
 		setMonto(monto);
 		setGustos(gustospedidos);
-		setEstado(estado);
+		setEstadoPedido(estado);
 		setUsuario(usuario);
 		
 	}
-	public Pedido(int id, int numero, double monto,String estado) {
+	public Pedido(int id, int numero, double monto,ePedido estado) {
 		setId(id);
 		setNumero(numero);
 		setMonto(monto);
-		setEstado(estado);
+		setEstadoPedido(estado);
 
 	}
 	public Pedido() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public String getEstado() {
-		return estado;
-	}
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-	private String estado;
+
 	public int getId() {
 		return id;
 	}

@@ -231,5 +231,11 @@ public class RepoList implements IRepo {
 		return null;
 	}
 
+	@Override
+	public List<GustoPedido> obtenerGustoPedido(String idRaw) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

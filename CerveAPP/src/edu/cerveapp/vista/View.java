@@ -81,7 +81,7 @@ public class View implements IviewCerveApp {
 		return u;
 	}
 
-	public void listarPedidos(List<Pedido> pedidos) {
+	public void listarPedidos(List<Pedido> pedidos, Controller ctx) {
 
 		String op = "";
 		boolean encontre = false;
@@ -95,12 +95,12 @@ public class View implements IviewCerveApp {
 			System.out.println("****************************************************");
 			while (it.hasNext()) {
 				Pedido p = (Pedido) it.next();
-				System.out.println("Pedido N: " + p.getIdRaw());
+				System.out.println("Pedido N: " + p.getIdRaw()+" Estado: "+p.getEstadoPedido()+" Usuario: "+p.getUsuario().getNombre()+" "+p.getUsuario().getApellido() );
 			}
 			System.out.println("****************************************************");
 			System.out.println("****************************************************");
 			System.out.println("Para Ver un pedido ingrese el numero, Para salir presione '0' y enter");
-			op = String.valueOf(obtenerTeclaInt());
+			op = obtenerTeclaString();
 			if (!op.equals("0")) {
 				it = pedidos.iterator();
 				while (it.hasNext() && !encontre) {
@@ -108,6 +108,31 @@ public class View implements IviewCerveApp {
 					if (String.valueOf(p.getIdRaw()).equals(op)) {
 						encontre = true;
 						int retop = verPedido(p);
+						if(retop==2)
+						{
+							System.out.println("  ********************CAMBIAR DE ESTADO PEDIDO********************");
+							System.out.println("*********************************************************************");
+							System.out.println("E-ENTREGADO||F-FACTURADO||S-SOLICITADO||C-CANCELAR MODIDFICACION");
+							System.out.println("    ****************************************************");
+							System.out.println("     **************************************************");
+							op = obtenerTeclaString();
+							switch(op) {
+								case "E":
+									p.setEstadoPedido(ePedido.ENTREGADO);
+									ctx.actualilzarPedido(p);
+									break;
+								case "F":
+									p.setEstadoPedido(ePedido.FACTURADO);
+									ctx.actualilzarPedido(p);
+									break;
+								case "S":
+									p.setEstadoPedido(ePedido.SOLICITADO);
+									ctx.actualilzarPedido(p);
+									break;
+							}
+							mostrarMsg("El Pedido: "+p.getIdRaw()+" Fue cambiado al estado "+p.getEstadoPedido().toString());
+							
+						}
 					}
 				}
 
@@ -123,6 +148,7 @@ public class View implements IviewCerveApp {
 
 		System.out.println("****************************************************");
 		System.out.println("Numero de Pedido: " + pedido.getIdRaw());
+		System.out.println("Estado del pedido: " + pedido.getEstadoPedido());
 		System.out.println("Nombre: " + pedido.getUsuario().getNombre());
 		System.out.println("Apellido: " + pedido.getUsuario().getApellido());
 		System.out.println("Dirección: " + pedido.getUsuario().getDireccion());
@@ -145,6 +171,7 @@ public class View implements IviewCerveApp {
 		System.out.println("********************* MENU DE OPCIONES**************");
 		System.out.println("Listar Pedidos Presione: 1");
 		System.out.println("Crear Pedido Presione: 2");
+		System.out.println("Actualizar pedidos nuevos desde la WEB: 3");
 		System.out.println("Salir del Sistema escriba: exit");
 		System.out.println("****************************************************");
 		System.out.println("****************************************************");
@@ -191,18 +218,20 @@ public class View implements IviewCerveApp {
 
 		Iterator<GustoStock> it = ctx.obtenerGustos().iterator();
 		GustoPedido gustoPedido;
+		pedido.generateRaw();
 		while (it.hasNext()) {
 			GustoStock g = it.next();
-			System.out.println("****************************************************************");
+			System.out.println("****************************************************************************");
 			System.out.println("Ingresa la cantidad de Litros de la mas rica cerveza " + g.getNomnbre() + ":");
-			System.out.println("****************************************************************");
+			System.out.println("****************************************************************************");
 
 			litros = obtenerTeclaInt();
 			gustoPedido = new GustoPedido();
 			if (litros > 0) {
-
+				gustoPedido.setId_pedido(pedido.getIdRaw());
 				gustoPedido.setNomnbre(g.getNomnbre());
 				gustoPedido.setCantidadPedida(litros);
+				gustoPedido.setId_gusto(g.getId());
 
 				gusto.add(gustoPedido);
 
@@ -211,8 +240,9 @@ public class View implements IviewCerveApp {
 		}
 		pedido.setEstadoPedido(ePedido.SOLICITADO);
 		pedido.setGustosPedido(gusto);
-		System.out.println("****************************************************");
-		String op = obtenerTeclaString();
+		pedido.generateRaw();
+		System.out.println("*****************VUELVE A MENU***********************************");
+		
 		// return op;
 
 		return pedido;
@@ -220,7 +250,9 @@ public class View implements IviewCerveApp {
 
 	@Override
 	public void mostrarMsg(String msg) {
-		// TODO Auto-generated method stub
+		System.out.println("*****************¡¡¡ATENCION!!!!!***********************************");
+		System.out.println(msg);
+		System.out.println("********************************************************************");
 
 	}
 

@@ -1,22 +1,20 @@
-package main;
+package edu.cerveapp.procesos;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import edu.cerveapp.Repo.RepoBD.RepoBD;
 import edu.cerveapp.Repo.RepoList.RepoList;
-import edu.cerveapp.business.Controller;
 
+import edu.cerveapp.business.PedidosWeb;
 import edu.cerveapp.entities.IRepo;
 import edu.cerveapp.entities.InvalidConfigurationException;
-import edu.cerveapp.vista.View;
 import edu.gscigliotto.conf.inifiles.IniManager;
 import edu.gscigliotto.conf.inifiles.NotFoundSeccionExeption;
 import edu.gscigliotto.conf.inifiles.Seccion;
 
-public class Main {
+public class TaskAsync {
 	private static final String APP_DIR =  Paths.get("").toAbsolutePath().toString();
 	private static final String CONF_DIRECTORY = "\\conf\\";
 	private static final String CONF_FILE = "setup.ini";
@@ -63,18 +61,16 @@ public class Main {
 				break;
 			}			
 
-			View vista = new View();
-			Controller negocio = new Controller(db, vista, iniMngr);
+		PedidosWeb pedidoWeb= new PedidosWeb(iniMngr.getSeccion("ENTORNO").getItems().get("url_pedidos"), db);
+		pedidoWeb.procesar();
 
-			
-			negocio.startApp();
 
 		} catch (InvalidConfigurationException e) {
-			System.out.println(e.toString());// debo cambiar por log
+	
 
 		} catch (NotFoundSeccionExeption e) {
 
-			System.out.println(e.toString());
+		
 		}
 
 	}
