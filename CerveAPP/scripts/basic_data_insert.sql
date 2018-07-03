@@ -1,3 +1,5 @@
+USE [cerveAPP]
+
 INSERT INTO [dbo].[usuarios]
            ([dni]
            ,[nombre]
@@ -11,20 +13,20 @@ INSERT INTO [dbo].[usuarios]
 GO
 INSERT INTO [dbo].[gustos]
            ([nombre_gusto]
-           ,[cantidad_disponible])
+           ,[cantidad_disponible],precio_litro)
      VALUES
-           ('IPA',1.0)
+           ('IPA',1.0,20.1)
 GO
 INSERT INTO [dbo].[gustos]
            ([nombre_gusto]
-           ,[cantidad_disponible])
+           ,[cantidad_disponible],precio_litro)
      VALUES
-           ('Honey',1.0)
+           ('Honey',1.0,23.76)
 GO
 
 INSERT INTO [dbo].[gustos]
            ([nombre_gusto]
-           ,[cantidad_disponible])
+           ,[cantidad_disponible],precio_litro)
      VALUES
-           ('PORTER',1.0)
+           ('PORTER',1.0,24.55)
 GO
