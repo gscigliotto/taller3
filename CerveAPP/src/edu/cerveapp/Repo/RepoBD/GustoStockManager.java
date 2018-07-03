@@ -9,29 +9,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.cerveapp.entities.GustoStock;
+import edu.cerveapp.entities.OperationalCRUDException;
 
 
 public class GustoStockManager {
 	private Connection conn;
 
-	public GustoStockManager(Connection conn) {
+	public GustoStockManager(Connection conn) throws IllegalArgumentException{
+		if(conn==null)throw new IllegalArgumentException("Parametro conn nulo");
 		this.conn = conn;
 	}
 	
-	public void borrarTabla() {
+	public void borrarTabla() throws OperationalCRUDException {
 		String query ="DROP TABLE  gustos;";
 		
 		try {
 			Statement statement = conn.createStatement();
 			statement.execute(query);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new OperationalCRUDException(e.getMessage());
 		}
 
 	}
 	
-	public void crearTabla() {
+	public void crearTabla() throws  OperationalCRUDException {
 		String query ="CREATE TABLE  gustos (id INT NOT NULL IDENTITY(1,1) PRIMARY KEY, nombre_gusto VARCHAR(20), cantidad_disponible DECIMAL(8,2),precio_litro DECIMAL(8,2))";
 		
 		try {
@@ -39,12 +40,12 @@ public class GustoStockManager {
 			statement.execute(query);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new OperationalCRUDException(e.getMessage());
 		}
 
 	}
 	
-	public List<GustoStock> obtenerGustos() {
+	public List<GustoStock> obtenerGustos() throws OperationalCRUDException {
 		String query = "SELECT id,nombre_gusto,cantidad_disponible,precio_litro from GUSTOS";
 		List<GustoStock> gustos = new ArrayList<GustoStock>();
 
@@ -55,12 +56,12 @@ public class GustoStockManager {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new OperationalCRUDException(e.getMessage());
 		}
 		return gustos;
 	}
 
-	public GustoStock obtenerGustos(String nombre) {
+	public GustoStock obtenerGustos(String nombre) throws OperationalCRUDException {
 		String query = "SELECT id,nombre_gusto,cantidad_disponible,precio_litro from GUSTOS where upper(nombre_gusto) like ?";
 		GustoStock gusto = null;
 
@@ -74,8 +75,7 @@ public class GustoStockManager {
 				gusto=new GustoStock(rs.getInt("id"), rs.getString("nombre_gusto"), rs.getDouble("cantidad_disponible"),rs.getDouble("precio_litro"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new OperationalCRUDException(e.getMessage());
 		}
 
 		return gusto;

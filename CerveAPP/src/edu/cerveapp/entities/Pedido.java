@@ -5,6 +5,12 @@ import java.util.UUID;
 
 public class Pedido {
 	private String idRaw;
+	private int id;
+	private Usuario usuario;
+	private List<GustoPedido> gustosPedido;
+	private double monto;
+	
+	
 	public String getIdRaw() {
 		return idRaw;
 	}
@@ -16,10 +22,8 @@ public class Pedido {
         String randomUUIDString = uuid.toString();
 		this.idRaw = randomUUIDString;
 	}
-	private int id;
-	private Usuario usuario;
-	private List<GustoPedido> gustosPedido;
-	private double monto;
+
+	
 	
 	public Pedido(int id ,double monto, List<GustoPedido> gustospedidos,ePedido estado,Usuario usuario)  {
 		setId(id);

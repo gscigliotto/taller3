@@ -11,6 +11,7 @@ import java.util.List;
 
 import edu.cerveapp.entities.GustoPedido;
 import edu.cerveapp.entities.IRepo;
+import edu.cerveapp.entities.OperationalCRUDException;
 import edu.cerveapp.entities.Pedido;
 import edu.cerveapp.entities.Usuario;
 import edu.cerveapp.entities.ePedido;
@@ -25,32 +26,30 @@ public class PedidoManager {
 		this.repo = repo;
 	}
 
-	public void borrarTabla() {
+	public void borrarTabla() throws OperationalCRUDException {
 		String query = "DROP TABLE  pedidos;";
 
 		try {
 			Statement statement = conn.createStatement();
 			statement.execute(query);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new OperationalCRUDException(e.getMessage());
 		}
 
 	}
 
-	public void crearTabla() {
+	public void crearTabla() throws OperationalCRUDException {
 		String query = "CREATE TABLE  pedidos (id INT NOT NULL IDENTITY(1,1) PRIMARY KEY, id_usuario int, estado VARCHAR(10),monto DECIMAL(8,2),idRaw VARCHAR(100))";
 
 		try {
 			Statement statement = conn.createStatement();
 			statement.execute(query);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new OperationalCRUDException(e.getMessage());
 		}
 
 	}
-	public void ActualizarPedido(Pedido p) {
+	public void ActualizarPedido(Pedido p) throws OperationalCRUDException {
 		String query = "UPDATE PEDIDOS SET ESTADO=? WHERE IDRAW=? ";
 
 		try {
@@ -59,12 +58,11 @@ public class PedidoManager {
 			statement.setString(2,p.getIdRaw().toString());
 			statement.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new OperationalCRUDException(e.getMessage());
 		}
 
 	}
-	public void insertarPedido(Pedido pedido) {
+	public void insertarPedido(Pedido pedido) throws OperationalCRUDException {
 		String query = "INSERT INTO pedidos (id_usuario,idRaw,estado,monto) VALUES (?,?,?,?)";
 		try {
 			PreparedStatement statement = conn.prepareStatement(query);
@@ -88,18 +86,17 @@ public class PedidoManager {
 						statement.execute();
 					
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new OperationalCRUDException(e.getMessage());
 				}
 			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new OperationalCRUDException(e.getMessage());
 		}
 	}
 
-	public List<Pedido> obtenerPedidos() {
+	public List<Pedido> obtenerPedidos() throws OperationalCRUDException {
 		List<Pedido> pedidos = new ArrayList<Pedido>();
 		String query = "Select p.id,monto, id_usuario, estado,monto,idRaw, dni from pedidos p, usuarios u where p.id_usuario=u.id  ";
 
@@ -114,7 +111,7 @@ public class PedidoManager {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new OperationalCRUDException(e.getMessage());
 		}
 		return pedidos;
 

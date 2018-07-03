@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 
 import edu.cerveapp.Repo.RepoBD.RepoBD;
 import edu.cerveapp.Repo.RepoList.RepoList;
@@ -11,6 +12,7 @@ import edu.cerveapp.business.Controller;
 
 import edu.cerveapp.entities.IRepo;
 import edu.cerveapp.entities.InvalidConfigurationException;
+import edu.cerveapp.entities.OperationalCRUDException;
 import edu.cerveapp.vista.View;
 import edu.gscigliotto.conf.inifiles.IniManager;
 import edu.gscigliotto.conf.inifiles.NotFoundSeccionExeption;
@@ -41,6 +43,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		IRepo db = null;
+		boolean recrea;
 		try {
 			IniManager iniMngr = getIniManager();
 		
@@ -53,28 +56,37 @@ public class Main {
 				break;
 		
 			case "bd":
+				
 				if(seccion.getItems().get("recreate_all").equals("true")) {
-					db=new RepoBD(APP_DIR + CONF_DIRECTORY + seccion.getItems().get("dbconfig_file"),true);
+					recrea=true;
 				}
 				else
 				{
-					db=new RepoBD(APP_DIR + CONF_DIRECTORY + seccion.getItems().get("dbconfig_file"),false);
+					recrea=false;
+				}
+				try {
+					db=new RepoBD(APP_DIR + CONF_DIRECTORY + seccion.getItems().get("dbconfig_file"),recrea);
+				} catch (OperationalCRUDException | SQLException e) {
+					System.out.println("Unico Prinln del sistema fuera de la vista es para ver el error de bd: "+e.getMessage());
 				}
 				break;
 			}			
 
 			View vista = new View();
 			Controller negocio = new Controller(db, vista, iniMngr);
-
-			
 			negocio.startApp();
 
 		} catch (InvalidConfigurationException e) {
-			System.out.println(e.toString());// debo cambiar por log
-
+			System.out.println("Configuracion incorrecta del archivo setup.ini");
 		} catch (NotFoundSeccionExeption e) {
-
-			System.out.println(e.toString());
+			System.out.println("Faltan configuraciones escenciales en el archvio setup.ini");
+			
+		}catch (IllegalArgumentException e) {
+			System.out.println("Algun parametro es invalido");
+			
+		}
+		finally {
+			
 		}
 
 	}

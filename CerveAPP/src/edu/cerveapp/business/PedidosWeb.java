@@ -17,6 +17,7 @@ import edu.cerveapp.entities.GustoPedido;
 import edu.cerveapp.entities.GustoStock;
 import edu.cerveapp.entities.IRepo;
 import edu.cerveapp.entities.InvalidConfigurationException;
+import edu.cerveapp.entities.OperationalCRUDException;
 import edu.cerveapp.entities.Pedido;
 import edu.cerveapp.entities.Usuario;
 import edu.cerveapp.entities.ePedido;
@@ -65,11 +66,11 @@ public class PedidosWeb {
 
 	}
 
-	private GustoStock getGustosStock(String nombre) {
+	private GustoStock getGustosStock(String nombre) throws OperationalCRUDException {
 		return repo.getGustoByNombre(nombre);
 	}
 
-	public List<Pedido> procesar() {
+	public List<Pedido> procesar() throws OperationalCRUDException {
 
 		InputStream is = null;
 		try {

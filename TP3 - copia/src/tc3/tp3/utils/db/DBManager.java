@@ -28,13 +28,15 @@ public class DBManager {
 	}
 
 	public Connection getNewConnection(String environment) throws SQLException {
-        try {
+		
+		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			
 		} catch (ClassNotFoundException e) {
 
 		}  
-       
-		return DriverManager.getConnection(environment);
+		Connection conn = DriverManager.getConnection(environment);
+		return conn;
 
 	}
 }

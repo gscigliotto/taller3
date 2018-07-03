@@ -9,6 +9,7 @@ import edu.cerveapp.business.Controller;
 import edu.cerveapp.entities.GustoPedido;
 import edu.cerveapp.entities.GustoStock;
 import edu.cerveapp.entities.IviewCerveApp;
+import edu.cerveapp.entities.OperationalCRUDException;
 import edu.cerveapp.entities.Pedido;
 import edu.cerveapp.entities.Usuario;
 import edu.cerveapp.entities.UsuarioInvalidoException;
@@ -81,10 +82,9 @@ public class View implements IviewCerveApp {
 		return u;
 	}
 
-	public void listarPedidos(List<Pedido> pedidos, Controller ctx) {
+	public void listarPedidos(List<Pedido> pedidos, Controller ctx) throws OperationalCRUDException {
 
 		String op = "";
-		boolean encontre = false;
 
 		while (!op.equals("0")) {
 
@@ -95,7 +95,8 @@ public class View implements IviewCerveApp {
 			System.out.println("****************************************************");
 			while (it.hasNext()) {
 				Pedido p = (Pedido) it.next();
-				System.out.println("Pedido N: " + p.getIdRaw()+" Estado: "+p.getEstadoPedido()+" Usuario: "+p.getUsuario().getNombre()+" "+p.getUsuario().getApellido() );
+				System.out.println("Pedido N: " + p.getIdRaw() + " Estado: " + p.getEstadoPedido() + " Usuario: "
+						+ p.getUsuario().getNombre() + " " + p.getUsuario().getApellido());
 			}
 			System.out.println("****************************************************");
 			System.out.println("****************************************************");
@@ -103,35 +104,36 @@ public class View implements IviewCerveApp {
 			op = obtenerTeclaString();
 			if (!op.equals("0")) {
 				it = pedidos.iterator();
+				boolean encontre = false;
 				while (it.hasNext() && !encontre) {
 					Pedido p = (Pedido) it.next();
 					if (String.valueOf(p.getIdRaw()).equals(op)) {
 						encontre = true;
 						int retop = verPedido(p);
-						if(retop==2)
-						{
+						if (retop == 2) {
 							System.out.println("  ********************CAMBIAR DE ESTADO PEDIDO********************");
 							System.out.println("*********************************************************************");
 							System.out.println("E-ENTREGADO||F-FACTURADO||S-SOLICITADO||C-CANCELAR MODIDFICACION");
 							System.out.println("    ****************************************************");
 							System.out.println("     **************************************************");
 							op = obtenerTeclaString();
-							switch(op) {
-								case "E":
-									p.setEstadoPedido(ePedido.ENTREGADO);
-									ctx.actualilzarPedido(p);
-									break;
-								case "F":
-									p.setEstadoPedido(ePedido.FACTURADO);
-									ctx.actualilzarPedido(p);
-									break;
-								case "S":
-									p.setEstadoPedido(ePedido.SOLICITADO);
-									ctx.actualilzarPedido(p);
-									break;
+							switch (op) {
+							case "E":
+								p.setEstadoPedido(ePedido.ENTREGADO);
+								ctx.actualilzarPedido(p);
+								break;
+							case "F":
+								p.setEstadoPedido(ePedido.FACTURADO);
+								ctx.actualilzarPedido(p);
+								break;
+							case "S":
+								p.setEstadoPedido(ePedido.SOLICITADO);
+								ctx.actualilzarPedido(p);
+								break;
 							}
-							mostrarMsg("El Pedido: "+p.getIdRaw()+" Fue cambiado al estado "+p.getEstadoPedido().toString());
-							
+							mostrarMsg("El Pedido: " + p.getIdRaw() + " Fue cambiado al estado "
+									+ p.getEstadoPedido().toString());
+
 						}
 					}
 				}
@@ -153,13 +155,20 @@ public class View implements IviewCerveApp {
 		System.out.println("Apellido: " + pedido.getUsuario().getApellido());
 		System.out.println("Dirección: " + pedido.getUsuario().getDireccion());
 		Iterator<GustoPedido> it = pedido.getGustosPedido().iterator();
+		double total=0;
 		while (it.hasNext()) {
 			gusto = it.next();
 			gustos = gusto.getNomnbre() + " Cantidad: " + String.valueOf(gusto.getCantidadPedida());
 			System.out.println(gustos);
+			total=total+(gusto.getCantidadPedida()*gusto.getPreciolitro());
+			
 		}
-
-		System.out.println(	"1-Volver al listado de pedidos 2-Cambiar de Estado Pedido.");
+		System.out.println("---------------------------------------------------");
+		System.out.println("Importe Total: " +String.valueOf(total));
+		System.out.println("---------------------------------------------------");
+		
+		System.out.println("****************************************************");
+		System.out.println("1-Volver al listado de pedidos 2-Cambiar de Estado Pedido.");
 		op = obtenerTeclaInt();
 		return op;
 
@@ -189,7 +198,7 @@ public class View implements IviewCerveApp {
 	}
 
 	@Override
-	public Pedido crearPedido(Controller ctx) {
+	public Pedido crearPedido(Controller ctx) throws OperationalCRUDException {
 
 		boolean dnivalido = false;
 		List<GustoPedido> gusto = new ArrayList<GustoPedido>();
@@ -242,7 +251,7 @@ public class View implements IviewCerveApp {
 		pedido.setGustosPedido(gusto);
 		pedido.generateRaw();
 		System.out.println("*****************VUELVE A MENU***********************************");
-		
+
 		// return op;
 
 		return pedido;
