@@ -54,12 +54,11 @@ public class RepoBD implements IRepo {
 		} catch (SQLException e1) {
 			throw new OperationalCRUDException(e1.getMessage());
 		}
-		
+
 		if (recrear && estructuraCreada()) {
-	
+
 			borrarEstructura();
 			crearEstructura();
-
 
 		} else if (!estructuraCreada()) {
 			crearEstructura();
@@ -134,16 +133,14 @@ public class RepoBD implements IRepo {
 	@Override
 	public void actualizarPedido(Pedido p) throws OperationalCRUDException {
 
-			pedidoMng.ActualizarPedido(p);
-
+		pedidoMng.ActualizarPedido(p);
 
 	}
 
 	@Override
 	public void insertarPedido(Pedido p) throws OperationalCRUDException {
 
-			pedidoMng.insertarPedido(p);
-	
+		pedidoMng.insertarPedido(p);
 
 	}
 
