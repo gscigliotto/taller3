@@ -10,11 +10,11 @@ public class GustoPedido extends Gusto{
 		this.preciolitro = preciolitro;
 	}
 
-	public int getId_pedido() {
+	public String getId_pedido() {
 		return id_pedido;
 	}
 
-	public void setId_pedido(int id_pedido) {
+	public void setId_pedido(String id_pedido) {
 		this.id_pedido = id_pedido;
 	}
 
@@ -32,7 +32,7 @@ public class GustoPedido extends Gusto{
 
 	private double cantidadPedida;
 	private double preciolitro;
-	private int id_pedido;
+	private String id_pedido;
 	private int id_gusto;
 	public int getId() {
 		return id;
@@ -45,9 +45,9 @@ public class GustoPedido extends Gusto{
 	private int id;
 
 
-	public GustoPedido(int id, int id_pedido, int id_gusto, double cantidad_pedida, double precio_litro,String gusto) {
+	public GustoPedido(int id, String id_pedidoRaw, int id_gusto, double cantidad_pedida, double precio_litro,String gusto) {
 		setId(id);
-		setId_pedido(id_pedido);
+		setId_pedido(id_pedidoRaw);
 		setId_gusto(id_gusto);
 		setCantidadPedida(cantidad_pedida);
 		setPreciolitro(precio_litro);

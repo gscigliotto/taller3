@@ -3,12 +3,25 @@ package edu.cerveapp.entities;
 public class GustoStock extends Gusto{
 	private double variedadDisp;
 	private int id;
-
+	private double precio;
 	
-	public GustoStock(int id,String gusto, double cantidad_disponible) {
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public double getPrecio() {
+		return precio;
+	}
+	public void setPrecio(double precio) {
+		this.precio = precio;
+	}
+	public GustoStock(int id,String gusto, double cantidad_disponible,double precio) {
 		this.id=id;
 		setVariedadDisp(cantidad_disponible);
 		setNomnbre(gusto);
+		setPrecio(precio);
 		
 				
 		

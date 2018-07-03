@@ -13,6 +13,8 @@ public interface IRepo {
 	public void insertarPedido(Pedido p);
 	
 	public void actualizarGustoStock(GustoStock g);
+	public Usuario getUsuarioByIdExterno(String IdExterno);
+	public GustoStock getGustoByNombre(String gustonNombre);
 	
 	
 }

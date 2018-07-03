@@ -219,5 +219,17 @@ public class RepoList implements IRepo {
 		pedidos.add(p);
 	}
 
+	@Override
+	public Usuario getUsuarioByIdExterno(String IdExterno) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public GustoStock getGustoByNombre(String gustonNombre) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

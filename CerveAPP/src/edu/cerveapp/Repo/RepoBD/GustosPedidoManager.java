@@ -32,7 +32,7 @@ public class GustosPedidoManager {
 	}
 	
 	public void crearTabla() {
-		String query ="CREATE TABLE  gustosPedidos (id INT NOT NULL IDENTITY(1,1) PRIMARY KEY, id_pedido int,id_gusto int, cantidad_pedida DECIMAL(8,2),precio_litro DECIMAL(8,2))";
+		String query ="CREATE TABLE  gustosPedidos (id INT NOT NULL IDENTITY(1,1) PRIMARY KEY, id_pedidoRaw VARCHAR(50),id_gusto int, cantidad_pedida DECIMAL(8,2),precio_litro DECIMAL(8,2))";
 		
 		try {
 			Statement statement = conn.createStatement();
@@ -53,7 +53,7 @@ public class GustosPedidoManager {
 			preparedstatement.setInt(1, id_pedido);
 			ResultSet rs =preparedstatement.executeQuery();
 			while (rs.next()) {
-				gustos.add(new GustoPedido(rs.getInt("id_gusto"), rs.getInt("id_pedido"),rs.getInt("id_gusto"),rs.getDouble("cantidad_pedida"), rs.getDouble("precio_litro"),rs.getString("nombre_gusto")));
+				gustos.add(new GustoPedido(rs.getInt("id_gusto"), rs.getString("id_pedido"),rs.getInt("id_gusto"),rs.getDouble("cantidad_pedida"), rs.getDouble("precio_litro"),rs.getString("nombre_gusto")));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

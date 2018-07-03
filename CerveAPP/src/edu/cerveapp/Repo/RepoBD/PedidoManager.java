@@ -34,7 +34,7 @@ public class PedidoManager {
 	}
 
 	public void crearTabla() {
-		String query = "CREATE TABLE  pedidos (id INT NOT NULL IDENTITY(1,1) PRIMARY KEY, id_usuario int, nropedido int, estado VARCHAR(1),monto DECIMAL(8,2),responseId VARCHAR(50))";
+		String query = "CREATE TABLE  pedidos (id INT NOT NULL IDENTITY(1,1) PRIMARY KEY, id_usuario int, estado VARCHAR(1),monto DECIMAL(8,2),idRaw VARCHAR(100))";
 
 		try {
 			Statement statement = conn.createStatement();
@@ -47,16 +47,29 @@ public class PedidoManager {
 	}
 
 	public void insertarPedido(Pedido pedido) {
-		String query = "INSERT INTO pedidos (id_usuario,nropedido,estado,monto) VALUES (?,?,?,?)";
+		String query = "INSERT INTO pedidos (id_usuario,idRaw,estado,monto) VALUES (?,?,?,?)";
 		try {
 			PreparedStatement statement = conn.prepareStatement(query);
 			statement.setInt(1, pedido.getUsuario().getId());
-			statement.setInt(2, pedido.getNumero());
+			statement.setString(2, pedido.getIdRaw());
 
 			statement.setString(3, pedido.getEstado());
 			statement.setFloat(4, (float) pedido.getMonto());
 			statement.execute();
-			// ResultSet rs = statement.executeQuery();
+			try {
+				query = "INSERT INTO gustosPedidos (id_pedidoRaw,id_gusto,cantidad_pedida,precio_litro) VALUES (?,?,?,?)";
+				statement = conn.prepareStatement(query);
+				statement.setString(1, pedido.getIdRaw());
+				statement.setInt(2, pedido.getGustos().get(0).getId_gusto());
+				statement.setFloat(3,(float) pedido.getGustosPedido().get(0).getCantidadPedida());
+				statement.setFloat(4,(float) pedido.getGustosPedido().get(0).getPreciolitro());
+				statement.execute();
+			
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -67,12 +80,12 @@ public class PedidoManager {
 	public List<Pedido> obtenerPedidos() {
 		//String query = "select * from pedidos pe inner join usuarios us	on pe.id_usuario=us.id inner join gustospedidos gp on pe.id=gp.id_pedido inner join gustos gu on gp.id_gusto=gu.id ";
 
-		String query = "select pe.id id_pedido,pe.monto,pe.estado estado,pe.nropedido nropedido,us.id id_usuario,gp.id idgustoPedido,gp.id_gusto id_Gusto,";
+		String query = "select pe.id id_pedido,pe.monto,pe.estado estado,pe.idraw idraw,us.id id_usuario,gp.id idgustoPedido,gp.id_gusto id_Gusto,";
 		query += " gp.cantidad_pedida cantidad_pedida,gp.precio_litro precio_litro,gu.id id_gusto, gu.nombre_gusto gusto, ";
 		query += " us.dni dni, us.apellido apellido,us.mail mail,us.nombre nombre_usuario,us.telefono telefono,us.pass pass ";
 		query += " from pedidos pe ";
 		query += " inner join usuarios us	on pe.id_usuario=us.id ";
-		query += " inner join gustospedidos gp on pe.id=gp.id_pedido ";
+		query += " inner join gustospedidos gp on pe.idraw=gp.id_pedidoRaw ";
 		query += " inner join gustos gu on gp.id_gusto=gu.id";
 		
 		List<Pedido> pedidos = new ArrayList<Pedido>();
@@ -80,12 +93,12 @@ public class PedidoManager {
 		try {
 			ResultSet rs = conn.prepareStatement(query).executeQuery();
 			while (rs.next()) {
-				Pedido pedido = new Pedido(rs.getInt("id_pedido"), rs.getInt("nropedido"), rs.getDouble("monto"),null, rs.getString("estado"),new Usuario(rs.getInt("id_pedido"),rs.getString("dni"),rs.getString("nombre_usuario"),rs.getString("apellido"),rs.getString("telefono"),rs.getString("mail"),rs.getString("pass")));
+				Pedido pedido = new Pedido(rs.getInt("id_pedido"), rs.getString("idraw"), rs.getDouble("monto"),null, rs.getString("estado"),new Usuario(rs.getInt("id_pedido"),rs.getString("dni"),rs.getString("nombre_usuario"),rs.getString("apellido"),rs.getString("telefono"),rs.getString("mail"),rs.getString("pass")));
 				List<GustoPedido> gustos= new ArrayList<GustoPedido>();
-				gustos.add(new GustoPedido(rs.getInt("idgustoPedido"),rs.getInt("id_pedido"), rs.getInt("id_gusto"),  rs.getDouble("cantidad_pedida"), rs.getDouble("precio_litro"),rs.getString("gusto")));
+				gustos.add(new GustoPedido(rs.getInt("idgustoPedido"),rs.getString("idraw"), rs.getInt("id_gusto"),  rs.getDouble("cantidad_pedida"), rs.getDouble("precio_litro"),rs.getString("gusto")));
 				
 				while (rs.next()) {
-					gustos.add(new GustoPedido(rs.getInt("idgustoPedido"),rs.getInt("id_pedido"), rs.getInt("id_gusto"),  rs.getDouble("cantidad_pedida"), rs.getDouble("precio_litro"),rs.getString("gusto")));
+					gustos.add(new GustoPedido(rs.getInt("idgustoPedido"),rs.getString("idraw"), rs.getInt("id_gusto"),  rs.getDouble("cantidad_pedida"), rs.getDouble("precio_litro"),rs.getString("gusto")));
 				}
 				pedido.setGustosPedido(gustos);
 				pedidos.add(pedido);

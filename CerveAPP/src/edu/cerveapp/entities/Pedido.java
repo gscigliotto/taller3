@@ -1,20 +1,41 @@
 package edu.cerveapp.entities;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Pedido {
-	
-
+	private String idRaw;
+	public String getIdRaw() {
+		return idRaw;
+	}
+	public void setIdRaw(String idRaw) {
+		this.idRaw = idRaw;
+	}
+	public void generateRaw() {
+        UUID uuid = UUID.randomUUID();
+        String randomUUIDString = uuid.toString();
+		this.idRaw = randomUUIDString;
+	}
 	private int id;
 	private Usuario usuario;
 	private List<GustoPedido> gustosPedido;
 	private double monto;
-	private int numero;
+	
+	public Pedido(int id ,double monto, List<GustoPedido> gustospedidos,String estado,Usuario usuario)  {
+		setId(id);
+		generateRaw();
+	
+		setMonto(monto);
+		setGustos(gustospedidos);
+		setEstado(estado);
+		setUsuario(usuario);
+	}
 
 	
-	public Pedido(int id, int numero, double monto, List<GustoPedido> gustospedidos,String estado,Usuario usuario) {
+	public Pedido(int id,String idraw ,double monto, List<GustoPedido> gustospedidos,String estado,Usuario usuario) {
 		setId(id);
-		setNumero(numero);
+		setIdRaw(idraw);
+	
 		setMonto(monto);
 		setGustos(gustospedidos);
 		setEstado(estado);
@@ -26,8 +47,7 @@ public class Pedido {
 		setNumero(numero);
 		setMonto(monto);
 		setEstado(estado);
-	
-		
+
 	}
 	public Pedido() {
 		// TODO Auto-generated constructor stub
@@ -79,11 +99,9 @@ public class Pedido {
 	public void setGustosPedido(List<GustoPedido> gustosPedido) {
 		this.gustosPedido = gustosPedido;
 	}
-	public int getNumero() {
-		return numero;
-	}
-	public void setNumero(int numero) {
-		this.numero = numero;
+
+	public void setNumero(int num) {
+		//this.numero = GUID.randomUUID().toString();
 	}
 	
 

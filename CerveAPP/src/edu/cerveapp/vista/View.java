@@ -95,7 +95,7 @@ public class View implements IviewCerveApp {
 			System.out.println("****************************************************");
 			while (it.hasNext()) {
 				Pedido p = (Pedido) it.next();
-				System.out.println("Pedido N: " + p.getNumero());
+				System.out.println("Pedido N: " + p.getIdRaw());
 			}
 			System.out.println("****************************************************");
 			System.out.println("****************************************************");
@@ -105,7 +105,7 @@ public class View implements IviewCerveApp {
 				it = pedidos.iterator();
 				while (it.hasNext() && !encontre) {
 					Pedido p = (Pedido) it.next();
-					if (String.valueOf(p.getNumero()).equals(op)) {
+					if (String.valueOf(p.getIdRaw()).equals(op)) {
 						encontre = true;
 						int retop = verPedido(p);
 					}
@@ -122,7 +122,7 @@ public class View implements IviewCerveApp {
 		GustoPedido gusto;
 
 		System.out.println("****************************************************");
-		System.out.println("Numero de Pedido: " + pedido.getNumero());
+		System.out.println("Numero de Pedido: " + pedido.getIdRaw());
 		System.out.println("Nombre: " + pedido.getUsuario().getNombre());
 		System.out.println("Apellido: " + pedido.getUsuario().getApellido());
 		System.out.println("Dirección: " + pedido.getUsuario().getDireccion());
@@ -133,8 +133,7 @@ public class View implements IviewCerveApp {
 			System.out.println(gustos);
 		}
 
-		System.out.println(
-				"1-Volver al listado de pedidos 2-Cambiar de Estado Pedido. -2*****************P***********************************");
+		System.out.println(	"1-Volver al listado de pedidos 2-Cambiar de Estado Pedido.");
 		op = obtenerTeclaInt();
 		return op;
 

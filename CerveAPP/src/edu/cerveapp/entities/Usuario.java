@@ -73,5 +73,18 @@ public class Usuario {
 	private String pass;
 	private String telefono;
 	private String direccion;
+	public String getPass() {
+		return pass;
+	}
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+	public String getIdExt() {
+		return idExt;
+	}
+	public void setIdExt(String idExt) {
+		this.idExt = idExt;
+	}
+	private String idExt;
 	
 }

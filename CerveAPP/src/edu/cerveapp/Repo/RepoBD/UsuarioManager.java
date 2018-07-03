@@ -113,4 +113,27 @@ public class UsuarioManager {
 
 	}
 
+
+	public Usuario obtenerUsuariosByIdExt(String id) {
+		String query ="SELECT id,dni,nombre,apellido,telefono,mail, pass from USUARIOS where userId=?";
+		Usuario usuario = null;
+
+
+		try {
+			PreparedStatement statement=conn.prepareStatement(query);
+			statement.setString(1, id);
+			ResultSet rs = statement.executeQuery();
+			
+			
+			while (rs.next()) {
+				usuario=new Usuario(rs.getInt("id"),rs.getString("dni"),rs.getString("nombre"),rs.getString("apellido"),rs.getString("telefono"),rs.getString("mail"),rs.getString("pass"));
+				}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return usuario;
+
+	}
+
 }

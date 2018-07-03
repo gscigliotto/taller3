@@ -134,4 +134,14 @@ public class RepoBD implements IRepo {
 
 	}
 
+	@Override
+	public Usuario getUsuarioByIdExterno(String IdExterno) {
+		return usuarioMng.obtenerUsuariosByIdExt(IdExterno);
+	}
+
+	@Override
+	public GustoStock getGustoByNombre(String gustonNombre) {
+		return gustoStockMng.obtenerGustos(gustonNombre);	
+	}
+
 }
