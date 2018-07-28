@@ -46,13 +46,13 @@ public class IniPersDBEnvironment extends DBEnvironment implements IniPersistent
 	}
 	@Override
 	public void loadFromIni(IniManager iniManager, String sectionName) throws NotFoundSeccionExeption {
-		Seccion s =iniManager.getSeccion(sectionName);
-		this.setDriver(s.getItems().get(K_DRIVER));
-		this.setServer(s.getItems().get(K_SERVER));
-		this.setPort(s.getItems().get(K_PORT));
-		this.setDatabase(s.getItems().get(K_DATABASE));
-		this.setUsername(s.getItems().get(K_USERNAME));
-		this.setPassword(s.getItems().get(K_PASSWORD));
+		Seccion seccion =iniManager.getSeccion(sectionName);
+		this.setDriver(seccion.getValorClave(K_DRIVER));
+		this.setServer(seccion.getValorClave(K_SERVER));
+		this.setPort(seccion.getValorClave(K_PORT));
+		this.setDatabase(seccion.getValorClave(K_DATABASE));
+		this.setUsername(seccion.getValorClave(K_USERNAME));
+		this.setPassword(seccion.getValorClave(K_PASSWORD));
 		
 		
 	}

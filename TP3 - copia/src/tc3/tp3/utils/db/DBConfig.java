@@ -37,8 +37,8 @@ public class DBConfig {
 		}
 		try {
 			im.load();
-			Seccion s= im.getSeccion(this.ROOT_SECTION);
-			dben = new DBEnvironment(s.getItems().get("environment"),s.getItems().get("driver"),s.getItems().get("server"),s.getItems().get("port"),s.getItems().get("database"),s.getItems().get("username"),s.getItems().get("password")); 
+			Seccion seccion= im.getSeccion(this.ROOT_SECTION);
+			dben = new DBEnvironment(seccion.getValorClave("environment"),seccion.getValorClave("driver"),seccion.getValorClave("server"),seccion.getValorClave("port"),seccion.getValorClave("database"),seccion.getValorClave("username"),seccion.getValorClave("password")); 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -56,8 +56,8 @@ public class DBConfig {
 		}
 		try {
 			im.load();
-			Seccion s= im.getSeccion(this.ROOT_SECTION);
-			dben = new DBEnvironment(s.getItems().get("environment"),s.getItems().get("driver"),s.getItems().get("server"),s.getItems().get("port"),s.getItems().get("database"),s.getItems().get("username"),s.getItems().get("password")); 
+			Seccion seccion= im.getSeccion(this.ROOT_SECTION);
+			dben = new DBEnvironment(seccion.getValorClave("environment"),seccion.getValorClave("driver"),seccion.getValorClave("server"),seccion.getValorClave("port"),seccion.getValorClave("database"),seccion.getValorClave("username"),seccion.getValorClave("password")); 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

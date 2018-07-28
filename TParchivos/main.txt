@@ -47,7 +47,7 @@ public class main {
 		BufferedTextWriter bw = null;
 
 		try {
-			bw = new BufferedTextWriter(Ruta.toAbsolutePath().toString()+"\\main.txt");
+			bw = new BufferedTextWriter(Ruta.toAbsolutePath().toString() + "\\main.txt");
 		} catch (Exception e) {
 
 		}
@@ -57,7 +57,7 @@ public class main {
 		if (br.isReady() && bw.isReady()) {
 			while (txt != null) {
 				txt = br.readLine();
-				if(txt!=null)
+				if (txt != null)
 					bw.writeLine(txt);
 				log.error(txt);
 			}
@@ -66,9 +66,7 @@ public class main {
 
 		br.close();
 		bw.close();
-		
-		
-		
+
 		/*
 		 * FIN EJERCICIO 1
 		 */
@@ -82,10 +80,10 @@ public class main {
 		try {
 
 			im.load();
-			Seccion s = im.getSeccion("Startup");
-			log.info(s.getItems().get("AppName"));
+			Seccion seccion = im.getSeccion("Startup");
+			log.info(seccion.getValorClave("AppName"));
 
-			s.setItem("clave nuevooo2", "valornuevo");
+			seccion.setItem("clave nuevooo2", "valornuevo");
 			im.save();
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());

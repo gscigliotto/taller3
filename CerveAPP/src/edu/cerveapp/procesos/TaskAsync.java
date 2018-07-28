@@ -5,13 +5,12 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 
-import edu.cerveapp.Repo.RepoBD.RepoBD;
-import edu.cerveapp.Repo.RepoList.RepoList;
-
 import edu.cerveapp.business.PedidosWeb;
 import edu.cerveapp.entities.IRepo;
 import edu.cerveapp.entities.InvalidConfigurationException;
 import edu.cerveapp.entities.OperationalCRUDException;
+import edu.cerveapp.repoDB.RepoBD;
+import edu.cerveapp.repoList.RepoList;
 import edu.gscigliotto.conf.inifiles.IniManager;
 import edu.gscigliotto.conf.inifiles.NotFoundSeccionExeption;
 import edu.gscigliotto.conf.inifiles.Seccion;
@@ -38,8 +37,8 @@ public class TaskAsync {
 		return iniManager;
 
 	}
-
-	public static void main(String[] args) {
+/*
+	public static void main(String[] args) throws IOException {
 		IRepo db = null;
 		try {
 			IniManager iniMngr = getIniManager();
@@ -69,8 +68,8 @@ public class TaskAsync {
 		} catch (OperationalCRUDException e) {
 
 		} catch (SQLException e) {
-	
+
 		}
 	}
-
+*/
 }

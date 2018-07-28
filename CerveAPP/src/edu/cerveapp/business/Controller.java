@@ -1,115 +1,151 @@
 package edu.cerveapp.business;
 
+import java.io.IOException;
 import java.util.List;
 
+import com.lowagie.text.DocumentException;
+
+import edu.cerveapp.entities.Configuracion;
+import edu.cerveapp.entities.Credenciales;
 import edu.cerveapp.entities.GustoStock;
-import edu.cerveapp.entities.IRepo;
+
 import edu.cerveapp.entities.InvalidConfigurationException;
-import edu.cerveapp.entities.IviewCerveApp;
 import edu.cerveapp.entities.OperationalCRUDException;
 import edu.cerveapp.entities.Pedido;
 import edu.cerveapp.entities.Usuario;
-import edu.cerveapp.entities.UsuarioInvalidoException;
-import edu.gscigliotto.conf.inifiles.IniManager;
+import edu.cerveapp.utils.GeneratePDFFileIText;
+import edu.cerveapp.vista.View;
 import edu.gscigliotto.conf.inifiles.NotFoundSeccionExeption;
-
-import org.json.JSONException;
 
 public class Controller {
 
-	private IviewCerveApp view;
-	private IRepo repo;
-	private IniManager configuracion;
+	private Configuracion configuracion;
+	private View view;
 
-	public Controller(IRepo repo, IviewCerveApp view, IniManager configuracion) throws IllegalArgumentException {
-		if (repo == null || view == null || configuracion == null) {
-			throw new IllegalArgumentException("Alguno de los parametros no esta instanciado.");
+	public Controller(Configuracion configuracion) throws InvalidConfigurationException {
+		if (configuracion.getRepo() == null || configuracion.getInimanager() == null) {
+			throw new InvalidConfigurationException(
+					"La configuracion no es correcta corrobore que el archivo de configuracion tenga todos los parametros necesarios!.");
+		} else {
+			view = new View();
+			this.configuracion = configuracion;
 		}
-		this.view = view;
-		this.repo = repo;
+
 		this.configuracion = configuracion;
 	}
 
-	public void startApp() throws JSONException, InvalidConfigurationException {
+	public void actualilzarPedido(Pedido p) throws OperationalCRUDException {
+		configuracion.getRepo().actualizarPedido(p);
+	}
+
+	private void buscarPedidos() {
+
+		PedidosWeb pedidosWeb = null;
+		try {
+
+			pedidosWeb = new PedidosWeb(configuracion);
+			pedidosWeb.procesar();
+		} catch (InvalidConfigurationException | NotFoundSeccionExeption | IOException e) {
+			view.mostrarMsg("Hubo un error procesando los pedidos!!" + e.getMessage());
+
+		}
+
+		view.mostrarMsg("Se cargaron todos los pedidos de la PaginaWeb!!");
+	}
+
+	public Usuario buscarUsuario(String dni) {
+		Usuario u = configuracion.getRepo().buscarUsuario(dni);
+		return u;
+	}
+
+	private Usuario login() {
+
+		Credenciales credenciales;
+		Usuario usuario = null;
+		boolean usuarioOK = false;
+
+		do {
+			credenciales = this.view.loginUsuario();
+			usuario = buscarUsuario(credenciales.getUsuario());
+			if (usuario != null) {
+				usuarioOK = usuario.validarUsuario(credenciales.getPassword());
+			} else {
+				view.mostrarMsg("Usuario o contraseña invalidos");
+			}
+		} while (!usuarioOK);
+		return usuario;
+	}
+
+	public List<GustoStock> obtenerGustos() throws OperationalCRUDException {
+
+		return configuracion.getRepo().obtenerGustosStock();
+	}
+
+	public void startApp() {
 
 		String opcion = null;
-		Usuario u = login();
+		Usuario usuario = login();
 		do {
 			try {
-				opcion = view.mostrarMenu(u.getNombre());
+				opcion = view.mostrarMenu(usuario.getNombre());
 
 				switch (opcion) {
 				case "1":
-					view.listarPedidos(repo.obtenerPedidos(), this);
+					listarPedido();
 					break;
 				case "2":
-					Pedido p = view.crearPedido(this);
-					repo.insertarPedido(p);
+					crearPedido();
 					break;
 				case "3":
-					try {
-						buscarPedidos();
-					} catch (NotFoundSeccionExeption e) {
-						// TODO Auto-generated catch block
-						view.mostrarMsg("Hay un problema de configuracion." + e.getMessage());
-					}
-					view.mostrarMsg("Se cargaron todos los pedidos de la PaginaWeb!!");
+					buscarPedidos();
 					break;
-				case "exit":
-
-					;
+				case "4":
+					altaUsuario();
+					break;
+				case "5":
+					listarUsuarios();
+					break;
+				default:
 					break;
 				}
 			} catch (OperationalCRUDException e) {
-				view.mostrarMsg("Error de conexión con la BD.");
+				view.mostrarMsg("Error de conexión con la BD." + e.getMessage());
 
 			}
 		} while (!opcion.equals("exit"));
 
 	}
 
-	public void actualilzarPedido(Pedido p) throws OperationalCRUDException {
-		repo.actualizarPedido(p);
-	}
-
-	public List<GustoStock> obtenerGustos() throws OperationalCRUDException {
-
-		return repo.obtenerGustosStock();
-	}
-
-	private void buscarPedidos()
-			throws NotFoundSeccionExeption, JSONException, InvalidConfigurationException, OperationalCRUDException {
-
-		PedidosWeb pedidosWeb = new PedidosWeb(configuracion.getSeccion("ENTORNO").getItems().get("url_pedidos"), repo);
-		List<Pedido> pedidosweb = pedidosWeb.procesar();
+	private void listarUsuarios() {
+		view.listarUsuarios(configuracion.getRepo().obtenerUsuarios());
 
 	}
 
-	public Usuario buscarUsuario(String dni) throws UsuarioInvalidoException, OperationalCRUDException {
-		Usuario u = repo.buscarUsuario(dni);
-		if (u == null)
-			throw new UsuarioInvalidoException();
-		return u;
+	private void listarPedido() {
+		view.listarPedidos(configuracion.getRepo().obtenerPedidos(), this);
 	}
 
-	private Usuario login() {
-		Usuario u;
-		Usuario guardado = null;
-		boolean usuarioOK = false;
-		do {
-			try {
-				u = this.view.loginUsuario();
-				guardado = buscarUsuario(u.getDni());
-				guardado.validarUsuario(u.getPaas());
-				usuarioOK = true;
-			} catch (UsuarioInvalidoException e) {
-				view.mostrarMsg("Usuario o contraseña invalida.");
-			} catch (OperationalCRUDException e) {
-				view.mostrarMsg("Error de conexión con la BD.");
-			}
-		} while (!usuarioOK);
+	private void crearPedido() {
+		Pedido pedido = view.crearPedido(this);
+		configuracion.getRepo().insertarPedido(pedido);
 
-		return guardado;
+	}
+
+	private void altaUsuario() {
+		Usuario usuario = view.crearUsuario();
+		configuracion.getRepo().insertarUsuario(usuario);
+
+	}
+
+	public void gerarRemito(Pedido pedido) {
+		try {
+			GeneratePDFFileIText pdf = new GeneratePDFFileIText();
+			pdf.createPDF(pedido);
+			view.mostrarMsg("Se genero correctamente el Remito para el pedido " + String.valueOf(pedido.getId()));
+		} catch (InvalidConfigurationException | DocumentException e) {
+			view.mostrarMsg("Error generando el PDF: " + e.getMessage());
+		}
+
 	}
 
 }

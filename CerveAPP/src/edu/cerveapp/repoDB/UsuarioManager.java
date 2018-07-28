@@ -1,4 +1,4 @@
-package edu.cerveapp.Repo.RepoBD;
+package edu.cerveapp.repoDB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -51,8 +51,8 @@ public class UsuarioManager {
 			ResultSet rs = conn.prepareStatement(query).executeQuery();
 			while (rs.next()) {
 				usuarios.add(new Usuario(rs.getInt("id"), rs.getString("dni"), rs.getString("nombre"),
-						rs.getString("apellido"), rs.getString("telefono"), rs.getString("mail"),
-						rs.getString("pass"),rs.getString("direccion"),rs.getString("idExt")));
+						rs.getString("apellido"), rs.getString("telefono"), rs.getString("mail"), rs.getString("pass"),
+						rs.getString("direccion"), rs.getString("userId")));
 			}
 		} catch (SQLException e) {
 			throw new OperationalCRUDException(e.getMessage());
@@ -61,75 +61,94 @@ public class UsuarioManager {
 
 	}
 
-	public Usuario obtenerUsuarios(String dni) throws OperationalCRUDException {
-		String query ="SELECT id,dni,nombre,apellido,telefono,mail, pass,direccion,userId idExt from USUARIOS where dni=?";
+	
+	public Usuario obtenerUsuariosByDNI(String dni) throws OperationalCRUDException {
+		String query = "SELECT id,dni,nombre,apellido,telefono,mail, pass,direccion,userId from USUARIOS where dni=?";
 		Usuario usuario = null;
 
-
 		try {
-			PreparedStatement statement=conn.prepareStatement(query);
+			PreparedStatement statement = conn.prepareStatement(query);
 			statement.setString(1, dni);
 			ResultSet rs = statement.executeQuery();
-			
-			
+
 			while (rs.next()) {
-				usuario=new Usuario(rs.getInt("id"),rs.getString("dni"),rs.getString("nombre"),rs.getString("apellido"),rs.getString("telefono"),rs.getString("mail"),rs.getString("pass"),rs.getString("direccion"),rs.getString("idExt"));
-				}
+				usuario = new Usuario(rs.getInt("id"), rs.getString("dni"), rs.getString("nombre"),
+						rs.getString("apellido"), rs.getString("telefono"), rs.getString("mail"), rs.getString("pass"),
+						rs.getString("direccion"), rs.getString("userId"));
+			}
 		} catch (SQLException e) {
 			throw new OperationalCRUDException(e.getMessage());
 		}
 		return usuario;
 
 	}
-
-
-
-
-
-
-
+	 
 	public Usuario obtenerUsuariosById(String id) throws OperationalCRUDException {
-		String query ="SELECT id,dni,nombre,apellido,telefono,mail, pass,direccion,userId idExt  from USUARIOS where id=?";
+		String query = "SELECT id,dni,nombre,apellido,telefono,mail, pass,direccion,userId from USUARIOS where id=?";
 		Usuario usuario = null;
 
-
 		try {
-			PreparedStatement statement=conn.prepareStatement(query);
+			PreparedStatement statement = conn.prepareStatement(query);
 			statement.setString(1, id);
 			ResultSet rs = statement.executeQuery();
-			
-			
+
 			while (rs.next()) {
-				usuario=new Usuario(rs.getInt("id"),rs.getString("dni"),rs.getString("nombre"),rs.getString("apellido"),rs.getString("telefono"),rs.getString("mail"),rs.getString("pass"),rs.getString("direccion"),rs.getString("idExt"));
-				}
+				usuario = new Usuario(rs.getInt("id"), rs.getString("dni"), rs.getString("nombre"),
+						rs.getString("apellido"), rs.getString("telefono"), rs.getString("mail"), rs.getString("pass"),
+						rs.getString("direccion"), rs.getString("userId"));
+			}
 		} catch (SQLException e) {
 			throw new OperationalCRUDException(e.getMessage());
 		}
 		return usuario;
 
 	}
-
 
 	public Usuario obtenerUsuariosByIdExt(String id) {
-		String query ="SELECT id,dni,nombre,apellido,telefono,mail, pass,direccion,userId idExt  from USUARIOS where userId=?";
+		String query = "SELECT id,dni,nombre,apellido,telefono,mail, pass,direccion,userId from USUARIOS where userId=?";
 		Usuario usuario = null;
 
-
 		try {
-			PreparedStatement statement=conn.prepareStatement(query);
+			PreparedStatement statement = conn.prepareStatement(query);
 			statement.setString(1, id);
 			ResultSet rs = statement.executeQuery();
-			
-			
+
 			while (rs.next()) {
-				usuario=new Usuario(rs.getInt("id"),rs.getString("dni"),rs.getString("nombre"),rs.getString("apellido"),rs.getString("telefono"),rs.getString("mail"),rs.getString("pass"),rs.getString("direccion"),rs.getString("idExt"));
-				}
+				usuario = new Usuario(rs.getInt("id"), rs.getString("dni"), rs.getString("nombre"),
+						rs.getString("apellido"), rs.getString("telefono"), rs.getString("mail"), rs.getString("pass"),
+						rs.getString("direccion"), rs.getString("userId"));
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return usuario;
 
+	}
+
+	public int insertarUsuario(Usuario usuario) {
+		String query = "INSERT INTO usuarios (dni,nombre,apellido,telefono ,mail,pass,userId,direccion)  OUTPUT INSERTED.id VALUES (?,?,?,?,?,?,?,?)";
+		try {
+			PreparedStatement statement = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+			statement.setString(1, usuario.getDni());
+			statement.setString(2, usuario.getNombre());
+			statement.setString(3, usuario.getApellido());
+			statement.setString(4, usuario.getTelefono());
+			statement.setString(5, usuario.getMail());
+			statement.setString(6, usuario.getPass());
+			statement.setString(7, usuario.getIdExt());
+			statement.setString(8, usuario.getDireccion());
+	
+			statement.execute();
+			ResultSet identities= statement.getGeneratedKeys();
+			identities.next();
+			int idusuario =  identities.getInt(1);  
+			return idusuario; 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw new OperationalCRUDException(e.getMessage());
+		}
+		
 	}
 
 }

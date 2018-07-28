@@ -16,8 +16,11 @@ public class Seccion {
 
 	}
 
-	public HashMap<String, String> getItems() {
+	private HashMap<String, String> getItems() {
 		return items;
+	}
+	public String getValorClave(String clave) {
+		return getItems().get(clave);
 	}
 
 	public void setItems(HashMap<String, String> items) {

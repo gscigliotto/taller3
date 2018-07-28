@@ -1,0 +1,1 @@
+keytool -genkeypair -keystore myKeystore.p12 -storetype PKCS12 -store pass lnmagb12 -alias cerveappcert -keyalg RSA -keysize 2048 -validity 99999 -dname "CN=CerveApp Certificate, OU=TPTC3, O=ORT, L=CABA, ST=BSAS, C=SA"

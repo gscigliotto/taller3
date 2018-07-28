@@ -80,10 +80,10 @@ public class main {
 		try {
 
 			im.load();
-			Seccion s = im.getSeccion("Startup");
-			log.info(s.getItems().get("AppName"));
+			Seccion seccion = im.getSeccion("Startup");
+			log.info(seccion.getValorClave("AppName"));
 
-			s.setItem("clave nuevooo2", "valornuevo");
+			seccion.setItem("clave nuevooo2", "valornuevo");
 			im.save();
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
