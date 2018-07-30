@@ -3,7 +3,6 @@ package edu.cerveapp.repoDB;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 import edu.cerveapp.entities.GustoPedido;
@@ -26,14 +25,12 @@ public class RepoBD implements IRepo {
 	private boolean recrear;
 	private UsuarioManager usuarioMng;
 
-	public RepoBD(String connectionFile, boolean recrear) throws NotFoundSeccionExeption, InvalidConfigurationException,
-			IllegalArgumentException, OperationalCRUDException, SQLException {
+	public RepoBD(String connectionFile, boolean recrear) throws InvalidConfigurationException,
+			IllegalArgumentException, OperationalCRUDException {
 		this.recrear = recrear;
-		try {
-			cargarURL(connectionFile);
-		} catch (SQLException e1) {
-			throw new OperationalCRUDException("Error en la conexion con la BD : " + e1.getMessage());
-		}
+
+		cargarURL(connectionFile);
+
 
 		if (recrear && estructuraCreada()) {
 
@@ -67,8 +64,9 @@ public class RepoBD implements IRepo {
 	private void borrarEstructura() throws OperationalCRUDException {
 		usuarioMng.borrarTabla();
 		gustoStockMng.borrarTabla();
-		pedidoMng.borrarTabla();
 		gustoPedidoMng.borrarTabla();
+		pedidoMng.borrarTabla();
+		
 	}
 
 	@Override
@@ -76,22 +74,24 @@ public class RepoBD implements IRepo {
 		return usuarioMng.obtenerUsuariosByDNI(dato);
 	}
 
-	public void cargarURL(String connectionFile) throws IllegalArgumentException, NotFoundSeccionExeption,
-			InvalidConfigurationException, OperationalCRUDException, SQLException {
+	public void cargarURL(String connectionFile) throws  InvalidConfigurationException {
 		if (connectionFile.isEmpty())
 			throw new InvalidConfigurationException("La ruta de la configuracion de bd no puede estar vacia");
 
-		DBConfig config = new DBConfig(connectionFile);
-		DBManager manager = new DBManager(config);
+
 		try {
+			DBConfig config = new DBConfig(connectionFile);
+			DBManager manager = new DBManager(config);
 			conn = manager.getNewConnection(config.getURL());
 			gustoStockMng = new GustoStockManager(conn);
 			pedidoMng = new PedidoManager(conn, this);
 			usuarioMng = new UsuarioManager(conn);
 			gustoPedidoMng = new GustosPedidoManager(conn);
 
-		} catch (IllegalArgumentException e) {
-			throw e;
+		} catch (IllegalArgumentException |NotFoundSeccionExeption e) {
+			throw new InvalidConfigurationException(e.getMessage());
+		}catch (SQLException e) {
+			throw new OperationalCRUDException(e.getMessage());
 		}
 
 	}
@@ -104,7 +104,7 @@ public class RepoBD implements IRepo {
 
 	}
 
-	private boolean estructuraCreada() {
+	private boolean estructuraCreada() throws OperationalCRUDException  {
 		String query = "select count(name) cantidad from sys.tables where name in('usuarios','gustos','pedidos')";
 		boolean ret = false;
 
@@ -115,8 +115,7 @@ public class RepoBD implements IRepo {
 			if (ktablas > 0)
 				ret = true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			new OperationalCRUDException(e.getMessage()); 
 		}
 
 		return ret;
@@ -131,7 +130,7 @@ public class RepoBD implements IRepo {
 	}
 
 	@Override
-	public Usuario getUsuarioByIdExterno(String IdExterno) {
+	public Usuario getUsuarioByIdExterno(String IdExterno) throws OperationalCRUDException  {
 		return usuarioMng.obtenerUsuariosByIdExt(IdExterno);
 	}
 
@@ -169,7 +168,7 @@ public class RepoBD implements IRepo {
 	}
 
 	@Override
-	public void insertarUsuario(Usuario usuario) {
+	public void insertarUsuario(Usuario usuario) throws OperationalCRUDException  {
 		usuarioMng.insertarUsuario(usuario);
 		
 	}

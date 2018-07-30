@@ -104,7 +104,7 @@ public class UsuarioManager {
 
 	}
 
-	public Usuario obtenerUsuariosByIdExt(String id) {
+	public Usuario obtenerUsuariosByIdExt(String id) throws OperationalCRUDException {
 		String query = "SELECT id,dni,nombre,apellido,telefono,mail, pass,direccion,userId from USUARIOS where userId=?";
 		Usuario usuario = null;
 
@@ -120,13 +120,13 @@ public class UsuarioManager {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new OperationalCRUDException(e.getMessage());
 		}
 		return usuario;
 
 	}
 
-	public int insertarUsuario(Usuario usuario) {
+	public int insertarUsuario(Usuario usuario) throws OperationalCRUDException {
 		String query = "INSERT INTO usuarios (dni,nombre,apellido,telefono ,mail,pass,userId,direccion)  OUTPUT INSERTED.id VALUES (?,?,?,?,?,?,?,?)";
 		try {
 			PreparedStatement statement = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
@@ -145,7 +145,6 @@ public class UsuarioManager {
 			int idusuario =  identities.getInt(1);  
 			return idusuario; 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			throw new OperationalCRUDException(e.getMessage());
 		}
 		

@@ -44,16 +44,16 @@ public class RepoList implements IRepo {
 	public Usuario buscarUsuario(String dato) {
 		boolean encontre = false;
 		Iterator<Usuario> it = getListaUsuarios().iterator();
-		Usuario u = null;
+		Usuario usuario = null;
 		while (it.hasNext() && !encontre) {
-			u = it.next();
-			if (u.getDni().equals(dato)) {
+			usuario = it.next();
+			if (usuario.getDni().equals(dato)) {
 				encontre = true;
 			}
 		}
 		if (encontre == false)
-			u = null;
-		return u;
+			usuario = null;
+		return usuario;
 
 	}
 
@@ -104,36 +104,36 @@ public class RepoList implements IRepo {
 
 		Usuario usuario = obtenerUsuarios().get(1);
 
-		Pedido p = new Pedido();
-		p.setEstadoPedido(ePedido.SOLICITADO);
-		p.setNumero(1);
+		Pedido pedido = new Pedido();
+		pedido.setEstadoPedido(ePedido.SOLICITADO);
+		pedido.setNumero(1);
 
 		List<GustoPedido> gustoPedido = new ArrayList<GustoPedido>();
 		GustoPedido gusto = new GustoPedido();
 		gusto.setNomnbre("IPA");
 		gusto.setCantidadPedida(3);
 		gustoPedido.add(gusto);
-		p.setGustosPedido(gustoPedido);
-		p.setMonto(100);
-		p.setUsuario(usuario);
+		pedido.setGustosPedido(gustoPedido);
+		pedido.setMonto(100);
+		pedido.setUsuario(usuario);
 
-		pedidos.add(p);
-		p = new Pedido();
-		p.setEstadoPedido(ePedido.SOLICITADO);
-		p.setNumero(2);
+		pedidos.add(pedido);
+		pedido = new Pedido();
+		pedido.setEstadoPedido(ePedido.SOLICITADO);
+		pedido.setNumero(2);
 		gustoPedido = new ArrayList<GustoPedido>();
 		gusto = new GustoPedido();
 		gusto.setNomnbre("PORTER");
 		gusto.setCantidadPedida(3);
 		gustoPedido.add(gusto);
-		p.setGustosPedido(gustoPedido);
-		p.setMonto(100);
-		p.setUsuario(usuario);
+		pedido.setGustosPedido(gustoPedido);
+		pedido.setMonto(100);
+		pedido.setUsuario(usuario);
 
-		pedidos.add(p);
-		p = new Pedido();
-		p.setEstadoPedido(ePedido.SOLICITADO);
-		p.setNumero(3);
+		pedidos.add(pedido);
+		pedido = new Pedido();
+		pedido.setEstadoPedido(ePedido.SOLICITADO);
+		pedido.setNumero(3);
 		gustoPedido = new ArrayList<GustoPedido>();
 		gusto = new GustoPedido();
 		gusto.setNomnbre("PORTER");
@@ -144,57 +144,57 @@ public class RepoList implements IRepo {
 		gusto.setCantidadPedida(2);
 		gustoPedido.add(gusto);
 
-		p.setUsuario(usuario);
-		p.setGustosPedido(gustoPedido);
-		p.setMonto(100);
+		pedido.setUsuario(usuario);
+		pedido.setGustosPedido(gustoPedido);
+		pedido.setMonto(100);
 
-		pedidos.add(p);
+		pedidos.add(pedido);
 
 		id_pedido = 3;
 
 	}
 
 	private void llenarUsuarios() {
-		Usuario u = new Usuario();
+		Usuario usuario = new Usuario();
 
-		u.setApellido("Scigliotto");
-		u.setDireccion("Corrientes 4258");
-		u.setDni("30333280");
-		u.setNombre("Guillermo");
-		u.setMail("gscigliotto@gmail.com");
-		u.setPaas("123456");
+		usuario.setApellido("Scigliotto");
+		usuario.setDireccion("Corrientes 4258");
+		usuario.setDni("30333280");
+		usuario.setNombre("Guillermo");
+		usuario.setMail("gscigliotto@gmail.com");
+		usuario.setPaas("123456");
 
-		usuarios.add(u);
+		usuarios.add(usuario);
 
-		u = new Usuario();
-		u.setApellido("ApellidoTEST1");
-		u.setDireccion("DireccionTEST1");
-		u.setDni("CUIT TEST1");
-		u.setNombre("NOMBRE TEST1");
-		u.setMail("gscigliotto@gmail.com");
-		u.setPaas("123456");
+		usuario = new Usuario();
+		usuario.setApellido("ApellidoTEST1");
+		usuario.setDireccion("DireccionTEST1");
+		usuario.setDni("CUIT TEST1");
+		usuario.setNombre("NOMBRE TEST1");
+		usuario.setMail("gscigliotto@gmail.com");
+		usuario.setPaas("123456");
 
-		usuarios.add(u);
+		usuarios.add(usuario);
 
-		u = new Usuario();
-		u.setApellido("ApellidoTEST2");
-		u.setDireccion("DireccionTEST2");
-		u.setDni("CUIT TEST2");
-		u.setNombre("NOMBRE TEST2");
-		u.setMail("gscigliotto@gmail.com");
-		u.setPaas("123456");
+		usuario = new Usuario();
+		usuario.setApellido("ApellidoTEST2");
+		usuario.setDireccion("DireccionTEST2");
+		usuario.setDni("CUIT TEST2");
+		usuario.setNombre("NOMBRE TEST2");
+		usuario.setMail("gscigliotto@gmail.com");
+		usuario.setPaas("123456");
 
-		usuarios.add(u);
+		usuarios.add(usuario);
 
-		u = new Usuario();
-		u.setApellido("ApellidoTEST3");
-		u.setDireccion("DireccionTEST3");
-		u.setDni("CUIT TEST3");
-		u.setNombre("NOMBRE TEST3");
-		u.setMail("gscigliotto@gmail.com");
-		u.setPaas("123456");
+		usuario = new Usuario();
+		usuario.setApellido("ApellidoTEST3");
+		usuario.setDireccion("DireccionTEST3");
+		usuario.setDni("CUIT TEST3");
+		usuario.setNombre("NOMBRE TEST3");
+		usuario.setMail("gscigliotto@gmail.com");
+		usuario.setPaas("123456");
 
-		usuarios.add(u);
+		usuarios.add(usuario);
 
 	}
 

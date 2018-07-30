@@ -125,12 +125,11 @@ public class Configuracion {
 
 		switch (persistencia) {
 		case "list":
-			repo = new RepoList();
+			setRepo(new RepoList());
 			break;
 
 		case "bd":
-			repo = new RepoBD(APP_DIR + CONF_DIRECTORY + seccion.getValorClave("dbconfig_file"),
-					Boolean.getBoolean(strRecrea));
+			setRepo(new RepoBD(APP_DIR + CONF_DIRECTORY + seccion.getValorClave("dbconfig_file"),Boolean.valueOf(strRecrea)));
 			break;
 
 		default:

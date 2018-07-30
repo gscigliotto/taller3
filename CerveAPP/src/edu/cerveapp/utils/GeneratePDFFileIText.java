@@ -20,6 +20,7 @@ import java.io.*;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
+import java.text.DecimalFormat;
 import java.util.Iterator;
 import java.util.UUID;
 
@@ -78,9 +79,9 @@ public class GeneratePDFFileIText {
 			Paragraph paragraph = new Paragraph();
 			paragraph.add(new Paragraph("Pedido: " + pedido.getId(), smallBold));
 			paragraph.add(new Paragraph("Domicilio de entrega: " + pedido.getUsuario().getDireccion()));
-			paragraph.add(new Paragraph(
-					"Entregar a: " + pedido.getUsuario().getNombre() + " " + pedido.getUsuario().getApellido()));
-			paragraph.add(new Paragraph("Total: " + String.valueOf(pedido.getMonto()).substring(0, String.valueOf(pedido.getMonto()).indexOf(".")+3)));
+			paragraph.add(new Paragraph("Entregar a: " + pedido.getUsuario().getNombre() + " " + pedido.getUsuario().getApellido()));
+			
+			paragraph.add(new Paragraph("Total: " + new DecimalFormat("#.##").format(pedido.getMonto())));
 			paragraph.add(new Paragraph(""));
 			Section paragraphMore = chapter.addSection(paragraph);
 
@@ -103,7 +104,8 @@ public class GeneratePDFFileIText {
 				GustoPedido gustos = gustoPedido.next();
 				table.addCell(gustos.getNomnbre());
 				table.addCell(String.valueOf(gustos.getCantidadPedida()));
-				table.addCell(String.valueOf(gustos.getPreciolitro() * gustos.getCantidadPedida()));
+				
+				table.addCell(new DecimalFormat("#.##").format(gustos.getCantidadPedida() * gustos.getPreciolitro()));
 
 			}
 
@@ -144,7 +146,7 @@ public class GeneratePDFFileIText {
 			pdfStamper = PdfStamper.createSignature(pdfReader, null, '\0', outputFile);
 			PdfSignatureAppearance sap = pdfStamper.getSignatureAppearance();
 			sap.setCrypto(key, chain, null, PdfSignatureAppearance.SELF_SIGNED);
-			sap.setReason("Test SignPDF berthou.mc");
+			sap.setReason("Firmado Electronicamente.");
 			sap.setLocation("");
 
 			sap.setVisibleSignature(new Rectangle(10, 10, 50, 30), 1, "Campo de Firma");

@@ -65,19 +65,27 @@ public class PedidosWeb {
 		setRepo(repo);
 	}
 
-	public PedidosWeb(Configuracion configuracion) throws InvalidConfigurationException, NotFoundSeccionExeption {
-		String url = configuracion.getInimanager().getSeccion("ENTORNO").getValorClave("url_pedidos");
+	public PedidosWeb(Configuracion configuracion) throws InvalidConfigurationException {
+	
+		String url;
+		try {
+			url = configuracion.getInimanager().getSeccion("ENTORNO").getValorClave("url_pedidos");
+			if (url.isEmpty()||configuracion.getRepo() == null)
+				throw new InvalidConfigurationException("La URL no puede estar vacia o el repositorio no esta configurado");
+			
+			setUrl(url);
+			setRepo(configuracion.getRepo());
+			
+		} catch (NotFoundSeccionExeption e) {
+			throw new InvalidConfigurationException(e.getMessage());
+		}
 		
-		if (url.isEmpty()||configuracion.getRepo() == null)
-			throw new InvalidConfigurationException("La URL no puede estar vacia o el repositorio no esta configurado");
-		
-		setUrl(url);
-		setRepo(configuracion.getRepo());
+
 	}
 
 
 
-	public void procesar() throws IOException {
+	public void procesar() throws OperationalCRUDException {
 
 		InputStream archivoExterno = null;
 		try {
@@ -102,7 +110,7 @@ public class PedidosWeb {
 			}
 			archivoExterno.close();
 		} catch (IOException e) {
-			throw e;
+			throw new OperationalCRUDException(e.getMessage()) ;
 		}
 	}
 

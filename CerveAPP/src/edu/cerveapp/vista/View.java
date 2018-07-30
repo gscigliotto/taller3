@@ -1,5 +1,6 @@
 package edu.cerveapp.vista;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import java.util.Iterator;
@@ -20,7 +21,7 @@ import edu.cerveapp.entities.ePedido;
 public class View implements IviewCerveApp {
 
 	@Override
-	public Pedido crearPedido(Controller ctx) throws OperationalCRUDException {
+	public Pedido crearPedido(Controller ctx) {
 
 		boolean dnivalido = false;
 		List<GustoPedido> gusto = new ArrayList<GustoPedido>();
@@ -139,7 +140,7 @@ public class View implements IviewCerveApp {
 							break;
 						case 3:
 							
-							ctx.gerarRemito(pedido);
+							ctx.generarRemito(pedido);
 							break;
 							
 							
@@ -238,15 +239,7 @@ public class View implements IviewCerveApp {
 
 	}
 
-	private boolean validarNumero(int numero) {
-		boolean ok = false;
-		if (numero > 0) {
-			ok = true;
-		}
-		return ok;
-	}
 
-	
 	public Usuario crearUsuario() {
 		Usuario usuario = new Usuario();
 		System.out.println("****************************************************");
@@ -286,7 +279,9 @@ public class View implements IviewCerveApp {
 		double total = 0;
 		while (it.hasNext()) {
 			gusto = it.next();
-			gustos = gusto.getNomnbre() + " Cantidad: " + String.valueOf(gusto.getCantidadPedida()+" subtotal: "+gusto.getCantidadPedida() * gusto.getPreciolitro());
+			String df= new DecimalFormat("#.##").format(gusto.getCantidadPedida() * gusto.getPreciolitro());
+			
+			gustos = gusto.getNomnbre() + " Cantidad: " + String.valueOf(gusto.getCantidadPedida()+" subtotal: "+ df);
 			System.out.println(gustos);
 			total = total + (gusto.getCantidadPedida() * gusto.getPreciolitro());
 

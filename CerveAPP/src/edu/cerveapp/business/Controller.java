@@ -1,5 +1,6 @@
 package edu.cerveapp.business;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class Controller {
 		this.configuracion = configuracion;
 	}
 
-	public void actualilzarPedido(Pedido p) throws OperationalCRUDException {
+	public void actualilzarPedido(Pedido p) {
 		configuracion.getRepo().actualizarPedido(p);
 	}
 
@@ -45,7 +46,7 @@ public class Controller {
 
 			pedidosWeb = new PedidosWeb(configuracion);
 			pedidosWeb.procesar();
-		} catch (InvalidConfigurationException | NotFoundSeccionExeption | IOException e) {
+		} catch (InvalidConfigurationException | OperationalCRUDException e) {
 			view.mostrarMsg("Hubo un error procesando los pedidos!!" + e.getMessage());
 
 		}
@@ -54,12 +55,10 @@ public class Controller {
 	}
 
 	public Usuario buscarUsuario(String dni) {
-		Usuario u = configuracion.getRepo().buscarUsuario(dni);
-		return u;
+		return configuracion.getRepo().buscarUsuario(dni);
 	}
 
 	private Usuario login() {
-
 		Credenciales credenciales;
 		Usuario usuario = null;
 		boolean usuarioOK = false;
@@ -76,8 +75,7 @@ public class Controller {
 		return usuario;
 	}
 
-	public List<GustoStock> obtenerGustos() throws OperationalCRUDException {
-
+	public List<GustoStock> obtenerGustos(){
 		return configuracion.getRepo().obtenerGustosStock();
 	}
 
@@ -137,12 +135,15 @@ public class Controller {
 
 	}
 
-	public void gerarRemito(Pedido pedido) {
+	public void generarRemito(Pedido pedido) {
 		try {
 			GeneratePDFFileIText pdf = new GeneratePDFFileIText();
 			pdf.createPDF(pedido);
 			view.mostrarMsg("Se genero correctamente el Remito para el pedido " + String.valueOf(pedido.getId()));
 		} catch (InvalidConfigurationException | DocumentException e) {
+			File archivo = new File(configuracion.getSeccion().getValorClave("remitos_path")+String.valueOf(pedido.getId())+".pdf");
+			if(archivo.exists())
+				archivo.delete();
 			view.mostrarMsg("Error generando el PDF: " + e.getMessage());
 		}
 
